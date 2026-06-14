@@ -5,7 +5,7 @@
 # 👾 OP_INJOY Ultimate Bot Swarm 👾
 
 **An advanced, hybrid, and dynamic Minecraft bot swarm deployment tool.**<br>
-It supports both Java and Bedrock editions simultaneously.
+Engineered to seamlessly support both Java and Bedrock editions simultaneously.
 
 [![Node.js](https://img.shields.io/badge/Node.js-v22-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](#)
 [![Termux](https://img.shields.io/badge/Termux-Supported-000000?style=for-the-badge&logo=termux&logoColor=white)](#)
@@ -18,17 +18,17 @@ It supports both Java and Bedrock editions simultaneously.
 
 ## 🌐 About The Project
 
-There are many bot scripts out there, but few are truly customizable and hybrid. **OP_INJOY** is a fully-fledged bot swarm tool that runs effortlessly on Android (Termux), Linux Servers, and Windows.
+While many Minecraft bot scripts exist, few offer true hybrid functionality and deep customization. **OP_INJOY** is a comprehensive bot swarm deployment tool built to run effortlessly across Android (Termux), Linux, and Windows environments.
 
-It handles everything you need: automatic Node.js installations, dependency building, space trimming, and dynamic bot deployment for both Minecraft Java and Minecraft Bedrock editions!
+It automates the entire provisioning process—handling Node.js runtime installation, dependency compilation, system environment configuration, and dynamic swarm deployment for both Minecraft Java and Bedrock clients.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
-## ⚡ Getting Started (One-Click Installations)
+## ⚡ Automated Installation
 
-I give you three ways 😜 to use this. Select your terminal, copy the entire command, paste it, and press Enter. It configures everything automatically!
+We provide three automated deployment methods. Select the command block corresponding to your operating system, paste it into your terminal, and execute it. The script will automatically provision the required environment and install all dependencies globally.
 
 ### 📱 1. Termux Setup (Android)
 ```bash
@@ -42,36 +42,48 @@ sudo apt update -y && sudo apt upgrade -y && sudo apt install -y curl wget git &
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🪟 3. Windows Setup (PowerShell Admin)
-**IMPORTANT : ⚠️ YOU NEED TO OPEN POWERSHELL AS ADMINISTRATOR! ⚠️✅**
+### 🪟 3. Windows Setup (PowerShell)
+> **IMPORTANT: ⚠️ You must execute this command in a PowerShell terminal running as Administrator. ⚠️**
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Downloading and Installing Node.js..."; if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements } else { Write-Host "Winget missing! Downloading Node.js directly..."; Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; $currentPath = (Get-Location).Path; $batContent = "@echo off`ncd /d `"$currentPath`"`nnode bots.js"; $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii; [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User"); Clear-Host; & "$env:USERPROFILE\bots.bat"
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🎮 Everyday Usage
-Once the installer finishes configuring your script, you never need to copy-paste setup codes again. Just type the global command from anywhere:
+---
+
+## 🎮 Global Usage
+
+Once the initial environment provisioning is complete, the tool is installed globally. You no longer need to navigate to specific directories or run setup scripts. You can launch the bot swarm interface from any terminal path using the following command:
+
 ```bash
 bots
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🔗 To-do
-- [x] Support for Java Bots
-- [x] Support for Bedrock Bots
-- [x] Auto-Installer for Termux, Linux, and Windows
-- [x] Automatic /login and /register for offline servers
-- [ ] Add Custom Bot Movements (Coming Soon)
-- [ ] Add Chat Spam Feature (Coming Soon)
+---
+
+## 🗺️ Roadmap
+
+- [x] Implement native support for Java Edition bots
+- [x] Implement native support for Bedrock Edition bots
+- [x] Develop automated global installers for Termux, Linux, and Windows
+- [x] Automate `/login` and `/register` authentication handling for offline servers
+- [ ] Integrate custom context-aware bot movement logic (Coming Soon)
+- [ ] Develop a multi-threaded chat spam and moderation testing engine (Coming Soon)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
-### ❤️ Support This Project
-If you like this project you can give it a 💫 Star ⚠️ at the top of the page!
+## ❤️ Support This Project
+
+If you find this deployment tool useful, please consider giving it a 💫 **Star** at the top of the repository! Community support drives active development.
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🔗 Contact & Acknowledgments
-Creator: OP_INJOY
-Powered by: Opinjoy
+## 🔗 Contact & Acknowledgments
+
+* **Creator & Lead Developer:** OP_INJOY
+* **Powered by:** Opinjoy
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
