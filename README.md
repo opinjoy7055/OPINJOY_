@@ -32,20 +32,20 @@ I give you three ways 😜 to use this. Select your terminal, copy the entire co
 
 ### 📱 1. Termux Setup (Android)
 ```bash
-pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer
+pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && echo -e "#!/bin/bash\ncd \"$PWD\" && node bots.js" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && bots
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 🐧 2. Linux Setup (Ubuntu/Debian)
 ```bash
-sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs
+sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo bash -c "echo -e '#!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && sudo chmod +x /usr/local/bin/bots && clear && bots
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 🪟 3. Windows Setup (PowerShell Admin)
-## IMPORTANT : ⚠️ YOU NEED TO OPEN POWERSHELL AS ADMINISTRATOR! ⚠️✅
+**IMPORTANT : ⚠️ YOU NEED TO OPEN POWERSHELL AS ADMINISTRATOR! ⚠️✅**
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Downloading Node.js..." }
+Set-ExecutionPolicy Bypass -Scope Process -Force; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Downloading and Installing Node.js..."; winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; $currentPath = (Get-Location).Path; $batContent = "@echo off`ncd /d `"$currentPath`"`nnode bots.js"; $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii; [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User"); Clear-Host; & "$env:USERPROFILE\bots.bat"
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -65,11 +65,13 @@ bots
 - [ ] Add Chat Spam Feature (Coming Soon)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-❤️ Support This Project
+---
+
+### ❤️ Support This Project
 If you like this project you can give it a 💫 Star ⚠️ at the top of the page!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-🔗 Contact & Acknowledgments
+### 🔗 Contact & Acknowledgments
 Creator: OP_INJOY
 Powered by: Opinjoy
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
