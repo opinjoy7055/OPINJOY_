@@ -1,10 +1,26 @@
+// Copyright (c) 2026 OP_INJOY. All Rights Reserved. Proprietary and confidential.
+
 const mineflayer = require('mineflayer')
 const readline = require('readline')
+
+// --- COLOR PALETTE (ANSI Escape Codes) ---
+const c = {
+  reset: "\x1b[0m",
+  bold: "\x1b[1m",
+  red: "\x1b[31m",
+  green: "\x1b[32m",
+  yellow: "\x1b[33m",
+  blue: "\x1b[34m",
+  magenta: "\x1b[35m",
+  cyan: "\x1b[36m",
+  white: "\x1b[37m"
+}
+
 let bedrock
 try {
   bedrock = require('bedrock-protocol')
 } catch (e) {
-  console.log('⚠️ bedrock-protocol is missing!')
+  console.log(c.red + c.bold + '⚠️ bedrock-protocol is missing!' + c.reset)
 }
 
 const rl = readline.createInterface({
@@ -16,66 +32,66 @@ const ask = (query) => new Promise(resolve => rl.question(query, resolve))
 
 function refreshScreen() {
   console.clear()
-  console.log(String.raw`========================================================================
+  console.log(c.cyan + c.bold + String.raw`========================================================================
 
  ██████╗ ██████╗       ██╗███╗   ██╗██╗ ██████╗ ██╗   ██╗
 ██╔═══██╗██╔══██╗      ██║████╗  ██║██║██╔═══██╗╚██╗ ██╔╝
 ██║   ██║██████╔╝█████╗██║██╔██╗ ██║██║██║   ██║ ╚████╔╝ 
 ██║   ██║██╔═══╝ ╚════╝██║██║╚██╗██║██║██║   ██║  ╚██╔╝  
 ╚██████╔╝██║           ██║██║ ╚████║██║╚██████╔╝   ██║   
- ╚═════╝ ╚═╝           ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝   
+ ╚═════╝ ╚═╝           ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝   ` + c.reset)
                                                                   
-                      POWERED BY OP_INJOY
-========================================================================`)
+  console.log(c.green + c.bold + `                      POWERED BY OP_INJOY` + c.reset)
+  console.log(c.cyan + c.bold + `========================================================================` + c.reset)
   console.log()
 }
 
 async function startInteractiveMenu() {
   refreshScreen()
-  console.log('Q1. Which minecraft edition bot you need?')
-  console.log('1) java bot')
+  console.log(c.cyan + c.bold + 'Q1. Which minecraft edition bot you need?' + c.reset)
+  console.log(c.yellow + '1) Java bot')
   console.log('2) Bedrock bot')
   console.log('3) Both java+bedrock')
-  console.log('4) exit\n')
+  console.log('4) Exit' + c.reset + '\n')
   
-  const editionChoice = (await ask('Choice (1-4)-» ')).trim()
+  const editionChoice = (await ask(c.white + c.bold + 'Choice (1-4)-» ' + c.reset)).trim()
   if (editionChoice === '4') {
-    console.log('Exiting script...')
+    console.log(c.red + c.bold + 'Exiting script...' + c.reset)
     process.exit(0)
   }
 
   refreshScreen()
-  console.log('Q2. Enter & Fill your Server Ip port if port default just enter press?')
-  const ip = (await ask('1) Server IP-» ')).trim()
-  const portInput = (await ask('2) Server Port-» ')).trim()
+  console.log(c.cyan + c.bold + 'Q2. Enter & Fill your Server Ip port (If port is default, just press enter)' + c.reset)
+  const ip = (await ask(c.yellow + '1) Server IP-» ' + c.reset)).trim()
+  const portInput = (await ask(c.yellow + '2) Server Port-» ' + c.reset)).trim()
   
   refreshScreen()
-  console.log('Q3. Enter Bot Base Name?')
-  const baseName = (await ask('1) Bot Name-» ')).trim()
+  console.log(c.cyan + c.bold + 'Q3. Enter Bot Base Name?' + c.reset)
+  const baseName = (await ask(c.yellow + '1) Bot Name-» ' + c.reset)).trim()
 
   refreshScreen()
   let javaVer = false;
   let bedrockVer = false;
 
   if (editionChoice === '1') {
-    console.log('Q4. Enter java edition bot version? (Press Enter for Auto-Detect)')
-    let jv = (await ask('1) Java version-» ')).trim()
+    console.log(c.cyan + c.bold + 'Q4. Enter Java edition bot version? (Press Enter for Auto-Detect)' + c.reset)
+    let jv = (await ask(c.yellow + '1) Java version-» ' + c.reset)).trim()
     if (jv) javaVer = jv;
   } else if (editionChoice === '2') {
-    console.log('Q4. Enter Bedrock edition bot version? (Press Enter for Auto-Detect)')
-    let bv = (await ask('1) Bedrock version-» ')).trim()
+    console.log(c.cyan + c.bold + 'Q4. Enter Bedrock edition bot version? (Press Enter for Auto-Detect)' + c.reset)
+    let bv = (await ask(c.yellow + '1) Bedrock version-» ' + c.reset)).trim()
     if (bv) bedrockVer = bv;
   } else if (editionChoice === '3') {
-    console.log('Q4. Enter Both java+bedrock version? (Press Enter for Auto-Detect)')
-    let jv = (await ask('1) Java version-» ')).trim()
-    let bv = (await ask('2) Bedrock version-» ')).trim()
+    console.log(c.cyan + c.bold + 'Q4. Enter Both java+bedrock version? (Press Enter for Auto-Detect)' + c.reset)
+    let jv = (await ask(c.yellow + '1) Java version-» ' + c.reset)).trim()
+    let bv = (await ask(c.yellow + '2) Bedrock version-» ' + c.reset)).trim()
     if (jv) javaVer = jv;
     if (bv) bedrockVer = bv;
   }
 
   refreshScreen()
-  console.log('Q5. Enter How much bots you want enter number?')
-  const botCountInput = (await ask('1) Bots number-» ')).trim()
+  console.log(c.cyan + c.bold + 'Q5. Enter how many bots you want to deploy?' + c.reset)
+  const botCountInput = (await ask(c.yellow + '1) Bots number-» ' + c.reset)).trim()
   rl.close()
 
   refreshScreen()
@@ -83,8 +99,8 @@ async function startInteractiveMenu() {
   const javaPort = portInput ? parseInt(portInput) : 25565
   const bedrockPort = portInput ? parseInt(portInput) : 19132
 
-  console.log(`🚀 Deploying ${botCount} bots to ${ip}...`)
-  console.log('-----------------------------------------')
+  console.log(c.magenta + c.bold + `🚀 Deploying ${botCount} bots to ${ip}...` + c.reset)
+  console.log(c.cyan + '-----------------------------------------' + c.reset)
 
   let launchDelay = 0
   for (let i = 1; i <= botCount; i++) {
@@ -102,30 +118,30 @@ async function startInteractiveMenu() {
 }
 
 function launchJavaBot(ip, port, username, version) {
-  console.log(`[Java] Deploying ${username}${version ? ` (v${version})` : ' (Auto)'}...`)
+  console.log(c.cyan + `[Java] Deploying ${username}${version ? ` (v${version})` : ' (Auto)'}...` + c.reset)
   const bot = mineflayer.createBot({ host: ip, port: port, username: username, version: version, physicsEnabled: false })
   
   bot.once('spawn', () => {
-    console.log(`✅ [Java] ${username} successfully joined!`)
+    console.log(c.green + c.bold + `✅ [Java] ${username} successfully joined!` + c.reset)
     setTimeout(() => {
       bot.chat('/register OpInjoy123 OpInjoy123')
       setTimeout(() => bot.chat('/login OpInjoy123'), 2000)
     }, 5000)
   })
-  bot.on('kicked', (reason) => console.log(`❌ [Java] ${username} Kicked`))
-  bot.on('error', (err) => console.log(`⚠️ [Java] ${username} Error: ${err.message}`))
+  bot.on('kicked', (reason) => console.log(c.red + c.bold + `❌ [Java] ${username} Kicked` + c.reset))
+  bot.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset))
 }
 
 function launchBedrockBot(ip, port, username, version) {
-  console.log(`[Bedrock] Deploying ${username}${version ? ` (v${version})` : ' (Auto)'}...`)
+  console.log(c.blue + `[Bedrock] Deploying ${username}${version ? ` (v${version})` : ' (Auto)'}...` + c.reset)
   const options = { host: ip, port: port, username: username, offline: true }
   if (version) options.version = version;
   
   const client = bedrock.createClient(options)
   
-  client.on('join', () => console.log(`✅ [Bedrock] ${username} successfully joined!`))
-  client.on('disconnect', (packet) => console.log(`❌ [Bedrock] ${username} Kicked`))
-  client.on('error', (err) => console.log(`⚠️ [Bedrock] ${username} Error: ${err.message}`))
+  client.on('join', () => console.log(c.green + c.bold + `✅ [Bedrock] ${username} successfully joined!` + c.reset))
+  client.on('disconnect', (packet) => console.log(c.red + c.bold + `❌ [Bedrock] ${username} Kicked` + c.reset))
+  client.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Bedrock] ${username} Error: ${err.message}` + c.reset))
 }
 
 startInteractiveMenu()
