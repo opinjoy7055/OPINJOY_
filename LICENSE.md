@@ -1,5 +1,8 @@
-Copyright (c) 2026 OP_INJOY. All rights reserved.
+Copyright (c) 2026 OP_INJOY. All Rights Reserved.
 
-The "OP_INJOY Ultimate Bot Swarm" source code, scripts, and associated documentation are the exclusive property of OP_INJOY. 
+The "OP_INJOY Ultimate Bot Swarm" script and its code belong entirely to OP_INJOY.
 
-Unauthorized copying, modification, distribution, or use of this software, via any medium, is strictly prohibited without explicit written permission from the creator, OP_INJOY.
+✅ YOU MAY: Use this tool to run your bots.
+❌ YOU MAY NOT: Copy, modify, edit, or distribute this code without direct, written permission from OP_INJOY. 
+
+Changing the code to bypass the creator's lock or claiming it as your own is strictly prohibited.
