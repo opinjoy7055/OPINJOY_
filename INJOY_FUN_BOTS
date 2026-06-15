@@ -38,7 +38,7 @@ function refreshScreen() {
 ██╔═══██╗██╔══██╗      ██║████╗  ██║██║██╔═══██╗╚██╗ ██╔╝
 ██║   ██║██████╔╝█████╗██║██╔██╗ ██║██║██║   ██║ ╚████╔╝ 
 ██║   ██║██╔═══╝ ╚════╝██║██║╚██╗██║██║██║   ██║  ╚██╔╝  
-╚██████╔╝██║           ██║██║ ╚████║╚═╝ ╚═════╝    ╚═╝   
+╚██████╔╝██║           ██║██║ ╚████║██║╚██████╔╝   ██║   
  ╚═════╝ ╚═╝           ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝   ` + c.reset)
                                                                   
   console.log(c.green + c.bold + `                      POWERED BY OP_INJOY` + c.reset)
@@ -70,8 +70,8 @@ async function startInteractiveMenu() {
   const baseName = (await ask(c.yellow + '1) Bot Name-» ' + c.reset)).trim()
 
   refreshScreen()
-  let javaVer = undefined;
-  let bedrockVer = undefined;
+  let javaVer = false;
+  let bedrockVer = false;
 
   if (editionChoice === '1') {
     console.log(c.cyan + c.bold + 'Q4. Enter Java edition bot version? (Press Enter for Auto-Detect)' + c.reset)
@@ -113,6 +113,7 @@ async function startInteractiveMenu() {
   }
   console.log(c.cyan + '-----------------------------------------' + c.reset)
 
+  // Recursive spawn loop for precise timing (6 seconds between joins)
   let currentBot = 1;
   function spawnNextBot() {
     if (currentBot > botCount) {
@@ -129,64 +130,38 @@ async function startInteractiveMenu() {
     }
 
     currentBot++;
-    setTimeout(spawnNextBot, 6000)
+    setTimeout(spawnNextBot, 6000) // 6 second delay between spawns
   }
 
+  // Start the chain
   spawnNextBot()
 }
 
 function launchJavaBot(ip, port, username, version) {
   console.log(c.cyan + `[Java] Deploying ${username}${version ? ` (v${version})` : ' (Auto-Detecting Version)'}...` + c.reset)
-  
-  const botOptions = { host: ip, port: port, username: username, physicsEnabled: true }
-  if (version) botOptions.version = version;
-
-  const bot = mineflayer.createBot(botOptions)
-  let afkInterval = null;
+  const bot = mineflayer.createBot({ host: ip, port: port, username: username, version: version, physicsEnabled: true }) // Physics enabled for Anti-AFK
   
   bot.once('spawn', () => {
     console.log(c.green + c.bold + `✅ [Java] ${username} successfully joined!` + c.reset)
     
+    // Auto Login
     setTimeout(() => {
-      if (bot.chat) {
-        bot.chat('/register OpInjoy123 OpInjoy123')
-        setTimeout(() => { if (bot.chat) bot.chat('/login OpInjoy123') }, 2000)
-      }
+      bot.chat('/register OpInjoy123 OpInjoy123')
+      setTimeout(() => bot.chat('/login OpInjoy123'), 2000)
     }, 5000)
 
-    afkInterval = setInterval(() => {
+    // Anti-AFK (Sit Up/Down & Head Movement) every 10 seconds
+    setInterval(() => {
       try {
-        if (bot.entity && bot.setControlState && bot.look) {
-          bot.setControlState('sneak', true)
-          setTimeout(() => {
-            try { if (bot.setControlState) bot.setControlState('sneak', false) } catch (e) {}
-          }, 400)
-          bot.look(bot.entity.yaw + (Math.random() > 0.5 ? 1 : -1), bot.entity.pitch)
-        }
+        bot.setControlState('sneak', true) // Sit down
+        setTimeout(() => bot.setControlState('sneak', false), 400) // Stand up
+        bot.look(bot.entity.yaw + (Math.random() > 0.5 ? 1 : -1), bot.entity.pitch) // Look left or right
       } catch (e) {}
     }, 10000)
   })
 
-  const cleanUp = () => {
-    if (afkInterval) {
-      clearInterval(afkInterval)
-      afkInterval = null;
-    }
-  }
-
-  bot.on('kicked', (reason) => {
-    console.log(c.red + c.bold + `❌ [Java] ${username} Kicked` + c.reset)
-    cleanUp()
-  })
-  
-  bot.on('error', (err) => {
-    console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset)
-    cleanUp()
-  })
-
-  bot.on('end', () => {
-    cleanUp()
-  })
+  bot.on('kicked', (reason) => console.log(c.red + c.bold + `❌ [Java] ${username} Kicked` + c.reset))
+  bot.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset))
 }
 
 function launchBedrockBot(ip, port, username, version) {
@@ -194,23 +169,14 @@ function launchBedrockBot(ip, port, username, version) {
   const options = { host: ip, port: port, username: username, offline: true }
   if (version) options.version = version;
   
-  try {
-    const client = bedrock.createClient(options)
-    
-    client.on('join', () => {
-      console.log(c.green + c.bold + `✅ [Bedrock] ${username} successfully joined!` + c.reset)
-    })
-    
-    client.on('disconnect', (packet) => {
-      console.log(c.red + c.bold + `❌ [Bedrock] ${username} Kicked` + c.reset)
-    })
-    
-    client.on('error', (err) => {
-      console.log(c.yellow + c.bold + `⚠️ [Bedrock] ${username} Error: ${err.message}` + c.reset)
-    })
-  } catch (err) {
-    console.log(c.red + c.bold + `❌ [Bedrock] Failed to initialize client: ${err.message}` + c.reset)
-  }
+  const client = bedrock.createClient(options)
+  
+  client.on('join', () => {
+    console.log(c.green + c.bold + `✅ [Bedrock] ${username} successfully joined!` + c.reset)
+  })
+  
+  client.on('disconnect', (packet) => console.log(c.red + c.bold + `❌ [Bedrock] ${username} Kicked` + c.reset))
+  client.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Bedrock] ${username} Error: ${err.message}` + c.reset))
 }
 
 startInteractiveMenu()
