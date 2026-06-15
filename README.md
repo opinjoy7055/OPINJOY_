@@ -32,20 +32,20 @@ I give you three ways 😜 to use this. Select your terminal, copy the entire co
 
 ### 🐧 1. Linux Setup (Standard User)
 ```bash
-sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo bash -c "echo -e '#!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && sudo chmod +x /usr/local/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
+sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo bash -c "echo -e '\!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && sudo chmod +x /usr/local/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
 ```
 
 ### 👑 2. Linux Setup (Root/Admin User)
 *Use this if you are already logged in as root.*
 ```bash
-apt update -y && apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | bash - && apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && bash -c "echo -e '#!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && chmod +x /usr/local/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
+apt update -y && apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | bash - && apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && bash -c "echo -e '\!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && chmod +x /usr/local/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 📱 3. Termux Setup (Android)
 ```bash
-pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && echo -e "#!/bin/bash\ncd \"$PWD\" && node bots.js" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
+pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && echo -e "\!/bin/bash\ncd \"$PWD\" && node bots.js" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
