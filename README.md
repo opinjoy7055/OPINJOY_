@@ -28,7 +28,7 @@ It automates the entire provisioning process—handling Node.js runtime installa
 
 ## ⚡ Automated Installation
 
-We provide three automated deployment methods. Select the command block corresponding to your operating system, paste it into your terminal, and execute it. The script will automatically provision the required environment and install all dependencies globally.
+We provide three automated deployment methods. Select the command block corresponding to your operating system, copy it using the copy button, paste it into your terminal, and execute it. The script will automatically provision the required environment and install all dependencies globally.
 
 ### 📱 1. Termux Setup (Android)
 ```bash
