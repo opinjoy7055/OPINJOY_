@@ -26,26 +26,26 @@ It automates the entire provisioning process—handling Node.js runtime installa
 
 ---
 
-## ⚡ Automated Installation
+## ⚡ Automated One-Click Installation
 
-Select the command block corresponding to your operating system, click the copy button in the top-right corner, paste it into your terminal, and press enter.
+Select the command link corresponding to your operating system, click the copy button, paste it into your terminal shell, and press enter.
 
-### 🐧 1. Linux Setup (Ubuntu/Debian/Cloud Containers)
+### 🐧 1. Linux Systems (Ubuntu/Debian/Cloud Servers)
 ```bash
-mkdir -p op-injoy-bot && cd op-injoy-bot && export DEBIAN_FRONTEND=noninteractive; S=""; command -v sudo >/dev/null 2>&1 && S="sudo"; if ! command -v node >/dev/null 2>&1; then $S apt-get update -y && $S apt-get install -y curl wget git build-essential cmake && curl -fsSL "[https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x)" | $S -E bash - && $S apt-get install -y nodejs; fi; npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && node bots.js
+bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 📱 2. Termux Setup (Android)
+### 📱 2. Termux Terminal (Android)
 ```bash
-mkdir -p op-injoy-bot && cd op-injoy-bot && apt update && apt install nodejs python make clang cmake curl wget git -y && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && node bots.js
+bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 🪟 3. Windows Setup (PowerShell)
-> **IMPORTANT: ⚠️ You must execute this command in a PowerShell terminal running as Administrator. ⚠️**
+> **⚠️ Execute inside a PowerShell terminal running as Administrator. ⚠️**
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -Force -Path "op-injoy-bot" | Out-Null; Set-Location "op-injoy-bot"; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Installing Node.js..."; if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements --silent } else { Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; node bots.js
+Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -Force -Path "op-injoy-bot" | Out-Null; Set-Location "op-injoy-bot"; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; if (!(Get-Command node -ErrorAction SilentlyContinue)) { if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements --silent } else { Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; node bots.js
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -53,7 +53,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -
 
 ## 🎮 Execution & Usage
 
-Once the automated installation script completes, your application folder and packages are fully ready. If you close your terminal or want to restart the interface later, run the following:
+Once the automated installation completes, your environment is entirely setup. If you close your terminal session or want to spin up the bots again later, simply navigate to your folder path and launch it directly:
 
 ```bash
 cd op-injoy-bot && node bots.js
