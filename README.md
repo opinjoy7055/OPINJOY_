@@ -18,7 +18,7 @@
 
 ## 🌐 About The Project
 
-There are many bot scripts out there, but few are truly customizable and hybrid. **OP_INJOY** is a fully-fledged bot swarm tool that runs effortlessly on Android (Termux), Linux Servers, and Windows. 
+There are many bot scripts out there, but few are truly customizable and hybrid. **OP_INJOY** is a fully-fledged bot swarm tool that runs effortlessly on Android (Termux), Linux Servers (Debian/Ubuntu), and Windows. 
 
 It handles everything you need: automatic Node.js installations, dependency building, space trimming, and dynamic bot deployment for both **Minecraft Java** and **Minecraft Bedrock** editions!
 
@@ -30,24 +30,30 @@ It handles everything you need: automatic Node.js installations, dependency buil
 
 I give you three ways 😜 to use this. Select your terminal, copy the entire command, paste it, and press Enter. It configures everything automatically!
 
-### 📱 1. Termux Setup (Android)
+### 🐧 1. Linux Setup (Standard User)
 ```bash
-pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer bedrock-protocol && curl -O https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS && mv INJOY_FUN_BOTS bots.js && echo -e "#!/bin/bash\ncd \"$PWD\" && node bots.js" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && bots
+sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo bash -c "echo -e '#!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && sudo chmod +x /usr/local/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
+```
+
+### 👑 2. Linux Setup (Root/Admin User)
+*Use this if you are already logged in as root.*
+```bash
+apt update -y && apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | bash - && apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && bash -c "echo -e '#!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && chmod +x /usr/local/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🐧 2. Linux Setup (Ubuntu/Debian)
+### 📱 3. Termux Setup (Android)
 ```bash
-sudo apt update -y && sudo apt upgrade -y && curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS && mv INJOY_FUN_BOTS bots.js && sudo bash -c "echo -e '#!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && sudo chmod +x /usr/local/bin/bots && clear && bots
+pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && echo -e "#!/bin/bash\ncd \"$PWD\" && node bots.js" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && echo -e "\n\e[1;32m✅ INSTALLATION COMPLETE!\e[0m\n\e[1;33m🎮 Type 'bots' and press Enter to launch your swarm!\e[0m\n"
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🪟 3. Windows Setup (PowerShell Admin)
+### 🪟 4. Windows Setup (PowerShell Admin)
 > **IMPORTANT : ⚠️ YOU NEED TO OPEN POWERSHELL AS ADMINISTRATOR! ⚠️✅**
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Downloading and Installing Node.js..."; winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer bedrock-protocol; Invoke-WebRequest -Uri "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -OutFile "bots.js"; $currentPath = (Get-Location).Path; $batContent = "@echo off`ncd /d `"$currentPath`"`nnode bots.js"; $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii; [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User"); Clear-Host; & "$env:USERPROFILE\bots.bat"
+Set-ExecutionPolicy Bypass -Scope Process -Force; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Downloading and Installing Node.js..."; winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; $currentPath = (Get-Location).Path; $batContent = "@echo off`ncd /d `"$currentPath`"`nnode bots.js"; $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii; [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User"); Clear-Host; Write-Host -ForegroundColor Green "✅ INSTALLATION COMPLETE!"; Write-Host -ForegroundColor Yellow "🎮 Type 'bots.bat' and press Enter to launch your swarm!"
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -61,6 +67,7 @@ Once the installer finishes configuring your script, you never need to copy-past
 ```bash
 bots
 ```
+*(Windows users: type `bots.bat`)*
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
