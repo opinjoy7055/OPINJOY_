@@ -137,26 +137,16 @@ Remove-Item -Path "$env:USERPROFILE\bots.bat" -Force -ErrorAction SilentlyContin
 
 ### 🔗 Feature Checklist & To-do
 
-​[x] Support for Java Bots (mineflayer)
-
-​[x] Support for Bedrock Bots (bedrock-protocol)
-
-​[x] Comprehensive Environment Auto-Installers
-
-​[x] Automatic Server Version Auto-Detection
-
-​[x] Automatic offline server /register and /login sequences
-
-​[x] Precision Join Throttling (6-second delay loop)
-
-​[x] Unlimited Swarm Mode Deployment Options
-
-​[x] Basic Anti-AFK Routines (Dynamic Sneaking & Look Orientations)
-
-​[ ] Advanced Custom Pathfinding & Complex Movements
-
-​[ ] Configurable Global Chat Spam Module
-
+- [x] Support for Java Bots (mineflayer)
+- [x] Support for Bedrock Bots (bedrock-protocol)
+- [x] Comprehensive Environment Auto-Installers
+- [x] Automatic Server Version Auto-Detection
+- [x] Automatic offline server /register and /login sequences
+- [x] Precision Join Throttling (6-second delay loop)
+- [x] Unlimited Swarm Mode Deployment Options
+- [x] Basic Anti-AFK Routines (Dynamic Sneaking & Look Orientations)
+- [ ] Advanced Custom Pathfinding & Complex Movements
+- [ ] Configurable Global Chat Spam Module
 
 ​<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
