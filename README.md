@@ -30,15 +30,15 @@ It automates the entire provisioning process—handling Node.js runtime installa
 
 Select the command link corresponding to your operating system, click the copy button, paste it into your terminal shell, and press enter.
 
-### 🐧 1. Linux Systems (Ubuntu/Debian/Cloud Servers)
+### 🐧 1. Linux Systems (Ubuntu/Debian/Containers)
 ```bash
-bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
+curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) -o install.sh && bash install.sh && rm install.sh
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 📱 2. Termux Terminal (Android)
 ```bash
-bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
+curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) -o install.sh && bash install.sh && rm install.sh
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
