@@ -5,7 +5,7 @@
 # 👾 OP_INJOY Ultimate Bot Swarm 👾
 
 **An advanced, hybrid, and dynamic Minecraft bot swarm deployment tool.**<br>
-Engineered to seamlessly support both Java and Bedrock editions simultaneously.
+Engineered to seamlessly support both Java and Bedrock editions simultaneously with a vibrant, multi-colored terminal interface.
 
 [![Node.js](https://img.shields.io/badge/Node.js-v22-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](#)
 [![Termux](https://img.shields.io/badge/Termux-Supported-000000?style=for-the-badge&logo=termux&logoColor=white)](#)
@@ -20,7 +20,7 @@ Engineered to seamlessly support both Java and Bedrock editions simultaneously.
 
 While many Minecraft bot scripts exist, few offer true hybrid functionality and deep customization. **OP_INJOY** is a comprehensive bot swarm deployment tool built to run effortlessly across Android (Termux), Linux, and Windows environments.
 
-It automates the entire provisioning process—handling Node.js runtime installation, dependency compilation, system environment configuration, and dynamic swarm deployment for both Minecraft Java and Bedrock clients.
+It automates the entire provisioning process—handling Node.js runtime installation, dependency compilation, system environment configuration, and dynamic swarm deployment for both Minecraft Java and Bedrock clients. The interactive interface uses high-visibility, native multi-color ANSI palettes to clearly display deployment metrics, warnings, and success logs without demanding external styling packages.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -32,13 +32,13 @@ We provide three automated deployment methods. Select the command block correspo
 
 ### 📱 1. Termux Setup (Android)
 ```bash
-pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl wget git -y && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && echo -e "#!/bin/bash\ncd \"$PWD\" && node bots.js" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && bots
+pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl wget git -y && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && bots
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 🐧 2. Linux Setup (Ubuntu/Debian)
 ```bash
-sudo apt update -y && sudo apt upgrade -y && sudo apt install -y curl wget git && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo bash -c "echo -e '#!/bin/bash\ncd \"$PWD\" && node bots.js' > /usr/local/bin/bots" && sudo chmod +x /usr/local/bin/bots && clear && bots
+sudo apt update -y && sudo apt upgrade -y && sudo apt install -y curl wget git && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" | sudo tee /usr/local/bin/bots > /dev/null && sudo chmod +x /usr/local/bin/bots && clear && bots
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -70,6 +70,21 @@ bots
 - [x] Automate `/login` and `/register` authentication handling for offline servers
 - [ ] Integrate custom context-aware bot movement logic (Coming Soon)
 - [ ] Develop a multi-threaded chat spam and moderation testing engine (Coming Soon)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## 📄 License & Terms of Use
+
+Copyright (c) 2026 OP_INJOY. All Rights Reserved.
+
+The "OP_INJOY Ultimate Bot Swarm" script and its code belong entirely to OP_INJOY.
+
+* **✅ YOU MAY:** Use this tool to deploy and manage your bots.
+* **❌ YOU MAY NOT:** Copy, modify, edit, or distribute this code without direct, written permission from OP_INJOY. 
+
+Changing the source code to bypass the creator's locks, removing credits, or re-uploading modified versions claiming ownership is strictly prohibited.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
