@@ -32,7 +32,7 @@ Select the command link corresponding to your operating system, click the copy b
 
 ### 🐧 1. Linux Systems (Ubuntu/Debian/Containers)
 ```bash
-curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) -o install.sh && bash install.sh && rm install.sh
+curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) -o install.sh && sudo bash install.sh && rm install.sh
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
