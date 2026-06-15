@@ -8,8 +8,8 @@
 Engineered to seamlessly support both Java and Bedrock editions simultaneously with a vibrant, multi-colored terminal interface.
 
 [![Node.js](https://img.shields.io/badge/Node.js-v22-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)](#)
-[![Termux](https://img.shields.io/badge/Termux-Supported-000000?style=for-the-badge&logo=termux&logoColor=white)](#)
 [![Linux](https://img.shields.io/badge/Linux-Supported-FCC624?style=for-the-badge&logo=linux&logoColor=black)](#)
+[![Termux](https://img.shields.io/badge/Termux-Supported-000000?style=for-the-badge&logo=termux&logoColor=white)](#)
 [![Windows](https://img.shields.io/badge/Windows-Supported-0078D6?style=for-the-badge&logo=windows&logoColor=white)](#)
 
 </div>
@@ -18,7 +18,7 @@ Engineered to seamlessly support both Java and Bedrock editions simultaneously w
 
 ## 🌐 About The Project
 
-While many Minecraft bot scripts exist, few offer true hybrid functionality and deep customization. **OP_INJOY** is a comprehensive bot swarm deployment tool built to run effortlessly across Android (Termux), Linux, and Windows environments.
+While many Minecraft bot scripts exist, few offer true hybrid functionality and deep customization. **OP_INJOY** is a comprehensive bot swarm deployment tool built to run effortlessly across Linux, Android (Termux), and Windows environments.
 
 It automates the entire provisioning process—handling Node.js runtime installation, dependency compilation, system environment configuration, and dynamic swarm deployment for both Minecraft Java and Bedrock clients. The interactive interface uses high-visibility, native multi-color ANSI palettes to clearly display deployment metrics, warnings, and success logs without demanding external styling packages.
 
@@ -28,37 +28,36 @@ It automates the entire provisioning process—handling Node.js runtime installa
 
 ## ⚡ Automated Installation
 
-Select the command block corresponding to your operating system, click the copy button in the top-right corner, paste it into your terminal, and press enter. 
+Select the command block corresponding to your operating system, click the copy button in the top-right corner, paste it into your terminal, and press enter.
 
-### 📱 1. Termux Setup (Android)
+### 🐧 1. Linux Setup (Ubuntu/Debian/Cloud Containers)
 ```bash
-mkdir -p op-injoy-bot && cd op-injoy-bot && pkg update -y -o Dpkg::Options::="--force-confold" && pkg install nodejs python make clang cmake curl wget git -y -o Dpkg::Options::="--force-confold" && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && (printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots || true) && node bots.js
+mkdir -p op-injoy-bot && cd op-injoy-bot && export DEBIAN_FRONTEND=noninteractive; S=""; command -v sudo >/dev/null 2>&1 && S="sudo"; if ! command -v node >/dev/null 2>&1; then $S apt-get update -y && $S apt-get install -y curl wget git build-essential cmake && curl -fsSL "[https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x)" | $S -E bash - && $S apt-get install -y nodejs; fi; npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && node bots.js
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🐧 2. Linux Setup (Ubuntu/Debian/Cloud Containers)
+### 📱 2. Termux Setup (Android)
 ```bash
-mkdir -p op-injoy-bot && cd op-injoy-bot && export DEBIAN_FRONTEND=noninteractive; S=""; command -v sudo >/dev/null 2>&1 && S="sudo"; if ! command -v node >/dev/null 2>&1; then $S apt-get update -y && $S apt-get install -y -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" curl wget git build-essential cmake && curl -fsSL "[https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x)" | $S -E bash - && $S apt-get install -y -o Dpkg::Options::="--force-confold" -o Dpkg::Options::="--force-confdef" nodejs; fi; npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && ($S mkdir -p /usr/local/bin && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" | $S tee /usr/local/bin/bots > /dev/null && $S chmod +x /usr/local/bin/bots || true) && node bots.js
+mkdir -p op-injoy-bot && cd op-injoy-bot && apt update && apt install nodejs python make clang cmake curl wget git -y && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && node bots.js
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 🪟 3. Windows Setup (PowerShell)
 > **IMPORTANT: ⚠️ You must execute this command in a PowerShell terminal running as Administrator. ⚠️**
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -Force -Path "op-injoy-bot" | Out-Null; Set-Location "op-injoy-bot"; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Installing Node.js..."; if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements --silent } else { Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; $currentPath = (Get-Location).Path; $batContent = "@echo off`ncd /d `"$currentPath`"`nnode bots.js"; $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii; [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User"); node bots.js
+Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -Force -Path "op-injoy-bot" | Out-Null; Set-Location "op-injoy-bot"; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Installing Node.js..."; if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements --silent } else { Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; node bots.js
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
-## 🎮 Global Usage
+## 🎮 Execution & Usage
 
-Once the initial environment setup completes, everything is preserved directly inside your installation path. If you close your terminal or deploy the system again later, simply navigate to your folder and launch the runner:
+Once the automated installation script completes, your application folder and packages are fully ready. If you close your terminal or want to restart the interface later, run the following:
 
 ```bash
 cd op-injoy-bot && node bots.js
 ```
-*(Note: On local physical environments where system path binary linking isn't restricted by host virtualization layers, you can also globally execute the system from any directory pathway using the `bots` command shorthand).*
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -68,7 +67,7 @@ cd op-injoy-bot && node bots.js
 
 - [x] Implement native support for Java Edition bots
 - [x] Implement native support for Bedrock Edition bots
-- [x] Develop automated global installers for Termux, Linux, and Windows
+- [x] Develop automated global installers for Linux, Termux, and Windows
 - [x] Automate `/login` and `/register` authentication handling for offline servers
 - [ ] Integrate custom context-aware bot movement logic (Coming Soon)
 - [ ] Develop a multi-threaded chat spam and moderation testing engine (Coming Soon)
