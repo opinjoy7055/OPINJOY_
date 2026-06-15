@@ -2,7 +2,7 @@
 
 <div align="center">
   
-  # 👾 OP_INJOY Ultimate Bot Swarm 👾
+  # 👾 OP_INJOY 👾 Ultimate Bot Swarm 
   
   **An advanced, hybrid, and dynamic Minecraft bot swarm deployment tool.**<br>
   It supports both Java and Bedrock editions simultaneously with automated Anti-AFK routines and smart scheduling.
