@@ -105,25 +105,25 @@ bots.bat
 
 
 
-##🗑️ Uninstallation (One-Click Removal)
+## 🗑️ Uninstallation (One-Click Removal)
 If you want to completely delete the script, its global shortcuts, and all downloaded project files, run the command for your system
 
 
-###🐧 For Linux (Standard & Root Users)
+### 🐧 For Linux (Standard & Root Users)
 ```bash
 sudo rm -f /usr/local/bin/bots && rm -rf bots.js package.json package-lock.json node_modules && clear && echo "🗑️ OP_INJOY Bot Swarm has been completely removed!"
 
 
 
 ```
-###📱 For Termux (Android)
+### 📱 For Termux (Android)
 ```bash
 rm -f $PREFIX/bin/bots && rm -rf bots.js package.json package-lock.json node_modules && clear && echo "🗑️ OP_INJOY Bot Swarm has been completely removed!"
 
 
 
 ```
-###🪟 For Windows (PowerShell Admin)
+### 🪟 For Windows (PowerShell Admin)
 ```bash
 Remove-Item -Path "$env:USERPROFILE\bots.bat" -Force -ErrorAction SilentlyContinue; Remove-Item -Path "bots.js", "package.json", "package-lock.json" -Force -ErrorAction SilentlyContinue; Remove-Item -Path "node_modules" -Recurse -Force -ErrorAction SilentlyContinue; Write-Host "🗑️ OP_INJOY Bot Swarm has been completely removed!"
 
@@ -135,7 +135,8 @@ Remove-Item -Path "$env:USERPROFILE\bots.bat" -Force -ErrorAction SilentlyContin
 
 
 
-### ​🔗 Feature Checklist & To-do
+### 🔗 Feature Checklist & To-do
+
 ​[x] Support for Java Bots (mineflayer)
 
 ​[x] Support for Bedrock Bots (bedrock-protocol)
@@ -156,13 +157,10 @@ Remove-Item -Path "$env:USERPROFILE\bots.bat" -Force -ErrorAction SilentlyContin
 
 ​[ ] Configurable Global Chat Spam Module
 
+
 ​<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 ---
-
-
 
 ## 📄 License & Terms of Use
 ​Copyright (c) 2026 OP_INJOY. All Rights Reserved. Proprietary and confidential.
