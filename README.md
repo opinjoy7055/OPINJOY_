@@ -83,17 +83,30 @@ bots.bat
 
 ---
 
-## ❤️ Support This Project
+## 📄 License & Terms of Use
 
-If you like this project you can give it a 💫 **Star ⚠️** at the top of the page!
+Copyright (c) 2026 OP_INJOY. All Rights Reserved.
+
+The "OP_INJOY Ultimate Bot Swarm" script and its code belong entirely to OP_INJOY.
+
+* **✅ YOU MAY:** Use this tool to deploy and manage your bots.
+* **❌ YOU MAY NOT:** Copy, modify, edit, or distribute this code without direct, written permission from OP_INJOY. 
+
+Changing the source code to bypass the creator's locks, removing credits, or re-uploading modified versions claiming ownership is strictly prohibited.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
 
+## ❤️ Support This Project
+
+If you find this deployment tool useful, please consider giving it a 💫 **Star** at the top of the repository! Community support drives active development.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 ## 🔗 Contact & Acknowledgments
 
-* **Creator:** OP_INJOY
+* **Creator & Lead Developer:** OP_INJOY
 * **Powered by:** Opinjoy
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
