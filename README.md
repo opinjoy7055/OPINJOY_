@@ -45,7 +45,7 @@ bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/i
 ### 🪟 3. Windows Setup (PowerShell)
 > **⚠️ Execute inside a PowerShell terminal running as Administrator. ⚠️**
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -Force -Path "op-injoy-bot" | Out-Null; Set-Location "op-injoy-bot"; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; if (!(Get-Command node -ErrorAction SilentlyContinue)) { if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements --silent } else { Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; node bots.js
+Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -Force -Path "$HOME\op-injoy-bot" | Out-Null; Set-Location "$HOME\op-injoy-bot"; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; if (!(Get-Command node -ErrorAction SilentlyContinue)) { if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements --silent } else { Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol --no-audit --no-fund; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; node bots.js
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -56,7 +56,7 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; New-Item -ItemType Directory -
 Once the automated installation completes, your environment is entirely setup. If you close your terminal session or want to spin up the bots again later, simply navigate to your folder path and launch it directly:
 
 ```bash
-cd op-injoy-bot && node bots.js
+cd ~/op-injoy-bot && node bots.js
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
