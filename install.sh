@@ -10,7 +10,7 @@ TARGET_DIR="$HOME/op-injoy-bot"
 mkdir -p "$TARGET_DIR"
 cd "$TARGET_DIR" || exit 1
 
-echo "📂 Isolated project directory created at: $TARGET_DIR"
+echo "📂 Isolated project directory verified: $TARGET_DIR"
 
 # 1. Environment Detection & Runtime Provisioning
 if [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
@@ -24,13 +24,16 @@ else
     command -v sudo >/dev/null 2>&1 && S="sudo"
     
     if ! command -v node >/dev/null 2>&1; then
-        echo "📦 Node.js not found. Installing runtime packages..."
+        echo "📦 Node.js not found. Installing Node.js v22 via modern NodeSource GPG keyrings..."
         $S apt-get update -y
-        $S apt-get install -y curl wget git build-essential cmake
-        curl -fsSL "https://deb.nodesource.com/setup_22.x" | $S -E bash -
-        $S apt-get install -y nodejs
+        $S apt-get install -y ca-certificates curl gnupg build-essential cmake git
+        $S mkdir -p /etc/apt/keyrings
+        curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | $S gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_22.x nodistro main" | $S tee /etc/apt/sources.list.d/nodesource.list
+        $S apt-get update -y
+        $S apt-get install nodejs -y
     else
-        echo "✅ Node.js already present ($(node -v)). Skipping environment provisioning."
+        echo "✅ Node.js already present ($(node -v))."
     fi
 fi
 
@@ -39,13 +42,14 @@ echo "⚙️ Re-indexing local project packages..."
 rm -f package.json package-lock.json
 npm init -y > /dev/null
 
-echo "📥 Compiling mineflayer, minecraft-data, and bedrock-protocol..."
+echo "📥 Installing mineflayer, minecraft-data, and bedrock-protocol..."
 npm install mineflayer@latest minecraft-data@latest bedrock-protocol --no-audit --no-fund
 
 # 3. Fetching Your Bot Script
 echo "📥 Syncing bot core engine..."
 curl -fsSL "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -o bots.js
 
-# 4. Success Launch
-echo "🚀 Environment verified! Launching panels..."
-node bots.js
+# 4. Success Launch with TTY Input Restoration
+echo "🚀 Environment verified! Launching interactive panels..."
+# The '</dev/tty' bypasses the curl pipe and links your keyboard directly back to the script!
+node bots.js </dev/tty
