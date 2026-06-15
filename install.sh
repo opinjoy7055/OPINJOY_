@@ -24,7 +24,7 @@ else
     command -v sudo >/dev/null 2>&1 && S="sudo"
     
     if ! command -v node >/dev/null 2>&1; then
-        echo "📦 Node.js not found. Installing Node.js v22 via modern NodeSource GPG keyrings..."
+        echo "📦 Node.js not found. Installing Node.js v22..."
         $S apt-get update -y
         $S apt-get install -y ca-certificates curl gnupg build-essential cmake git
         $S mkdir -p /etc/apt/keyrings
@@ -49,7 +49,6 @@ npm install mineflayer@latest minecraft-data@latest bedrock-protocol --no-audit 
 echo "📥 Syncing bot core engine..."
 curl -fsSL "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -o bots.js
 
-# 4. Success Launch with TTY Input Restoration
+# 4. Success Launch
 echo "🚀 Environment verified! Launching interactive panels..."
-# The '</dev/tty' bypasses the curl pipe and links your keyboard directly back to the script!
-node bots.js </dev/tty
+node bots.js
