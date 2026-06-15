@@ -138,8 +138,8 @@ Remove-Item -Path "$env:USERPROFILE\bots.bat" -Force -ErrorAction SilentlyContin
 
 ### 🔗 Feature Checklist & To-do
 
-- [x] Support for Java Bots (mineflayer)
-- [x] Support for Bedrock Bots (bedrock-protocol)
+- [x] Support for Java Bots 
+- [x] Support for Bedrock Bots
 - [x] Comprehensive Environment Auto-Installers
 - [x] Automatic Server Version Auto-Detection
 - [x] Automatic offline server /register and /login sequences
