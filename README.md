@@ -30,7 +30,8 @@ Select your terminal, copy the command, paste, and press Enter.
 
 ### 🐧 1. Linux Setup (Standard User)
 ```bash
-sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > /usr/local/bin/bots && sudo chmod +x /usr/local/bin/bots && clear && echo "✅ INSTALLATION COMPLETE!" && echo "🎮 Type 'bots' to launch your swarm!"
+sudo apt update -y && sudo apt upgrade -y && curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS && mv INJOY_FUN_BOTS bots.js && sudo printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > /usr/local/bin/bots && sudo chmod +x /usr/local/bin/bots && clear && echo "✅ INSTALLATION COMPLETE!" && echo "🎮 Type 'bots' to launch your swarm!"
+
 ```
 
 ### 👑 2. Linux Setup (Root/Admin User)
