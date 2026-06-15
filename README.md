@@ -30,17 +30,17 @@ Select your terminal, copy the command, paste, and press Enter.
 
 ### 🐧 1. Linux Setup (Standard User)
 ```bash
-sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo bash -c "echo '#!/bin/bash' > /usr/local/bin/bots && echo 'cd \"$PWD\" && node bots.js' >> /usr/local/bin/bots" && sudo chmod +x /usr/local/bin/bots && echo "" && echo "INSTALLATION COMPLETE!" && echo "Type 'bots' and press Enter to launch your swarm!" && echo ""
+sudo apt update -y && sudo apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > /usr/local/bin/bots && sudo chmod +x /usr/local/bin/bots && clear && echo "✅ INSTALLATION COMPLETE!" && echo "🎮 Type 'bots' to launch your swarm!"
 ```
 
 ### 👑 2. Linux Setup (Root/Admin User)
 ```bash
-apt update -y && apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | bash - && apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && bash -c "echo '#!/bin/bash' > /usr/local/bin/bots && echo 'cd \"$PWD\" && node bots.js' >> /usr/local/bin/bots" && chmod +x /usr/local/bin/bots && echo "" && echo "INSTALLATION COMPLETE!" && echo "Type 'bots' and press Enter to launch your swarm!" && echo ""
+apt update -y && apt upgrade -y && curl -fsSL [https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x) | bash - && apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && sudo printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > /usr/local/bin/bots && chmod +x /usr/local/bin/bots && clear && echo "✅ INSTALLATION COMPLETE!" && echo "🎮 Type 'bots' to launch your swarm!"
 ```
 
 ### 📱 3. Termux Setup (Android)
 ```bash
-pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && echo -e "#!/bin/bash\ncd \"$PWD\" && node bots.js" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && echo "" && echo "INSTALLATION COMPLETE!" && echo "Type 'bots' and press Enter to launch your swarm!" && echo ""
+pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl -y && npm init -y && npm install mineflayer bedrock-protocol && curl -O [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS) && mv INJOY_FUN_BOTS bots.js && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && echo "✅ INSTALLATION COMPLETE!" && echo "🎮 Type 'bots' to launch your swarm!"
 ```
 
 ### 🪟 4. Windows Setup (PowerShell Admin)
@@ -103,6 +103,8 @@ Changing the source code to bypass the creator's locks, removing credits, or re-
 If you find this deployment tool useful, please consider giving it a 💫 **Star** at the top of the repository! Community support drives active development.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
 
 ## 🔗 Contact & Acknowledgments
 
