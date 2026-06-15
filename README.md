@@ -28,26 +28,26 @@ It automates the entire provisioning process—handling Node.js runtime installa
 
 ## ⚡ Automated Installation
 
-Select the command block corresponding to your operating system, copy it cleanly using the copy button, paste it into your terminal, and press enter.
+Select the command block corresponding to your operating system, click the copy button in the top right corner, paste it into your terminal, and press enter.
 
-> **💡 Note:** These scripts use inline variable initialization (`P=`, `N=`, `B=`) to hide raw URL strings. This entirely prevents browser copy-paste engines and web consoles from corrupting code blocks with hidden markdown links.
+> **💡 Note:** These installation strings are designed to automatically detect if your system requires administrator permissions (`sudo`) or is running directly as `root`, preventing container environment crashes.
 
 ### 📱 1. Termux Setup (Android)
 ```bash
-P="https://"; B="${P}[raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)"; pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl wget git -y && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL -O "$B" && mv INJOY_FUN_BOTS bots.js && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && bots
+pkg update -y && pkg upgrade -y && pkg install nodejs python make clang cmake curl wget git -y && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" > $PREFIX/bin/bots && chmod +x $PREFIX/bin/bots && clear && bots
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-### 🐧 2. Linux Setup (Ubuntu/Debian)
+### 🐧 2. Linux Setup (Ubuntu/Debian/Cloud Containers)
 ```bash
-P="https://"; N="${P}[deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x)"; B="${P}[raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)"; sudo apt update -y && sudo apt upgrade -y && sudo apt install -y curl wget git && curl -fsSL "$N" | sudo -E bash - && sudo apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL -O "$B" && mv INJOY_FUN_BOTS bots.js && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" | sudo tee /usr/local/bin/bots > /dev/null && sudo chmod +x /usr/local/bin/bots && clear && bots
+S=""; command -v sudo >/dev/null 2>&1 && S="sudo"; $S apt update -y && $S apt upgrade -y && $S apt install -y curl wget git && curl -fsSL "[https://deb.nodesource.com/setup_22.x](https://deb.nodesource.com/setup_22.x)" | $S -E bash - && $S apt install -y nodejs build-essential cmake && npm init -y && npm install mineflayer@latest minecraft-data@latest bedrock-protocol && curl -fsSL "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -o bots.js && printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$PWD" | $S tee /usr/local/bin/bots > /dev/null && $S chmod +x /usr/local/bin/bots && clear && node bots.js
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### 🪟 3. Windows Setup (PowerShell)
 > **IMPORTANT: ⚠️ You must execute this command in a PowerShell terminal running as Administrator. ⚠️**
 ```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force; $p='https://'; $n=$p+'nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi'; $b=$p+'[raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)'; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Downloading and Installing Node.js..."; if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements } else { Write-Host "Winget missing! Downloading Node.js directly..."; Invoke-WebRequest -Uri $n -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri $b -OutFile "bots.js"; $currentPath = (Get-Location).Path; $batContent = "@echo off`ncd /d `"$currentPath`"`nnode bots.js"; $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii; [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User"); Clear-Host; & "$env:USERPROFILE\bots.bat"
+Set-ExecutionPolicy Bypass -Scope Process -Force; if (!(Get-Command node -ErrorAction SilentlyContinue)) { Write-Host "Downloading and Installing Node.js..."; if (Get-Command winget -ErrorAction SilentlyContinue) { winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements } else { Write-Host "Winget missing! Downloading Node.js directly..."; Invoke-WebRequest -Uri "[https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi](https://nodejs.org/dist/v22.2.0/node-v22.2.0-x64.msi)" -OutFile "$env:TEMP\node.msi"; Start-Process msiexec.exe -Wait -ArgumentList "/i $env:TEMP\node.msi /qn" }; $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User') }; npm init -y; npm install mineflayer@latest minecraft-data@latest bedrock-protocol; Invoke-WebRequest -Uri "[https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS)" -OutFile "bots.js"; $currentPath = (Get-Location).Path; $batContent = "@echo off`ncd /d `"$currentPath`"`nnode bots.js"; $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii; [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User"); Clear-Host; & "$env:USERPROFILE\bots.bat"
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -60,6 +60,8 @@ Once the initial environment provisioning is complete, the tool is installed glo
 ```bash
 bots
 ```
+*(Note: If running inside strict cloud virtual environments without local binary paths, simply execute `node bots.js` to start).*
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ---
