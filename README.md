@@ -54,8 +54,46 @@ Set-ExecutionPolicy Bypass -Scope Process -Force; if (!(Get-Command node -ErrorA
 ---
 
 ### 🎮 Everyday Usage
-Just type:
+
+Once the installer finishes, you never need to copy-paste setup codes again.
+
+**For Linux / Termux:**
 ```bash
 bots
 ```
-*(Windows: `bots.bat`)*
+
+**For Windows:**
+```bash
+bots.bat
+```
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+### 🔗 To-do
+- [x] Support for Java Bots
+- [x] Support for Bedrock Bots
+- [x] Auto-Installer for Termux, Linux, and Windows
+- [x] Automatic `/login` and `/register` for offline servers
+- [ ] Add Custom Bot Movements (Coming Soon)
+- [ ] Add Chat Spam Feature (Coming Soon)
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## ❤️ Support This Project
+
+If you like this project you can give it a 💫 **Star ⚠️** at the top of the page!
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+---
+
+## 🔗 Contact & Acknowledgments
+
+* **Creator:** OP_INJOY
+* **Powered by:** Opinjoy
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
