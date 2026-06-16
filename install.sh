@@ -1,14 +1,59 @@
 #!/bin/bash
-# ==========================================
-# OP_INJOY Ultimate Bot Swarm Installer (FORCE MODE)
-# ==========================================
+# ========================================================================
+# OP_INJOY Ultimate Universal Bot Swarm Installer (CROSS-PLATFORM FORCE MODE)
+# Supports: Android (Termux), Windows (Git Bash/MSYS), and Linux (Debian/Ubuntu)
+# ========================================================================
 
-echo "👾 Initializing OP_INJOY Bot Swarm Setup (Force Mode)..."
+echo "👾 Initializing OP_INJOY Bot Swarm Universal Setup..."
 
-# 1. Environment Detection & New Clean Directory Bypass
-if [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
+# 1. Detect Environment
+OS_TYPE="$(uname -s)"
+
+if [[ "$OS_TYPE" == *"MINGW"* ]] || [[ "$OS_TYPE" == *"MSYS"* ]] || [[ "$OS_TYPE" == *"CYGWIN"* ]]; then
+    echo "🪟 Windows (Git Bash/MSYS) Environment Detected!"
+    echo "⚙️ Launching automated Windows deployment via PowerShell..."
+    
+    # Write clean PowerShell commands to a temporary file to completely bypass bash escaping issues
+    cat << 'EOF' > temp_install.ps1
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    if (!(Get-Command node -ErrorAction SilentlyContinue)) {
+        Write-Host "Downloading and Installing Node.js..."
+        winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements
+        $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User')
+    }
+    npm init -y
+    npm install mineflayer bedrock-protocol
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -OutFile "bots.js"
+    $currentPath = (Get-Location).Path
+    $batContent = '@echo off' + [Environment]::NewLine + 'cd /d "' + $currentPath + '"' + [Environment]::NewLine + 'node bots.js'
+    $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii
+    [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User")
+    clear
+    Write-Host "========================================="
+    Write-Host "✅ WINDOWS INSTALLATION SUCCESSFUL!"
+    Write-Host "🎮 Close this terminal, open a new CMD/PowerShell, type 'bots.bat' and press Enter!"
+    Write-Host "========================================="
+EOF
+
+    powershell.exe -NoProfile -ExecutionPolicy Bypass -File temp_install.ps1
+    rm -f temp_install.ps1
+    exit 0
+
+elif [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
     echo "📱 Termux Environment Detected!"
-    TARGET_DIR="$HOME/OP_INJOY_SWARM" # Changed name to completely bypass the locked folder
+    TARGET_DIR="$HOME/OP_INJOY_SWARM"
+    
+    rm -rf "$TARGET_DIR" 2>/dev/null
+    mkdir -p "$TARGET_DIR"
+    cd "$TARGET_DIR" || { echo "❌ FATAL ERROR: Cannot access $TARGET_DIR"; exit 1; }
+
+    echo "⚙️ Force-updating Termux repositories & fixing dependencies..."
+    termux-setup-storage
+    pkg update -y
+    pkg cache-clean
+    pkg reinstall cmake jsoncpp -y
+    pkg install nodejs python make clang cmake curl wget git -y
+
 else
     echo "🐧 Standard Linux Environment Detected!"
     if [ "$EUID" -ne 0 ]; then
@@ -17,27 +62,16 @@ else
         exit 1
     fi
     TARGET_DIR="$HOME/OP_INJOY_SWARM"
-fi
+    
+    rm -rf "$TARGET_DIR" 2>/dev/null
+    mkdir -p "$TARGET_DIR"
+    cd "$TARGET_DIR" || { echo "❌ FATAL ERROR: Cannot access $TARGET_DIR"; exit 1; }
 
-# Forcefully remove the new directory if it somehow exists, then cleanly recreate it
-rm -rf "$TARGET_DIR" 2>/dev/null
-mkdir -p "$TARGET_DIR"
-cd "$TARGET_DIR" || { echo "❌ FATAL ERROR: Cannot access $TARGET_DIR"; exit 1; }
-
-echo "📂 Isolated working directory secured at: $TARGET_DIR"
-
-# 2. Brute-Force Package Provisioning
-if [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
-    echo "⚙️ Force-updating Termux repositories..."
-    pkg update -y
-    pkg install nodejs python make clang cmake curl wget git -y
-else
     export DEBIAN_FRONTEND=noninteractive
     echo "⚙️ Force-updating Linux core packages..."
     apt-get update -y
     apt-get install -y ca-certificates curl gnupg build-essential cmake git
     
-    # Force a clean overwrite of the Node.js keys
     rm -f /etc/apt/keyrings/nodesource.gpg /etc/apt/sources.list.d/nodesource.list
     mkdir -p /etc/apt/keyrings
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
@@ -47,18 +81,26 @@ else
     apt-get install nodejs -y
 fi
 
-# 3. Project Initialization & Forced NPM Installs
+# This core section executes cleanly for Termux and Standard Linux Environments
 echo "⚙️ Forcing clean package initialization..."
 npm init -y > /dev/null
 
 echo "📥 Brute-forcing installation of mineflayer, minecraft-data, and bedrock-protocol..."
-# The --force flag commands NPM to ignore warnings and push the installation through
 npm install mineflayer@latest minecraft-data@latest bedrock-protocol --no-audit --no-fund --force
 
-# 4. Fetching Your Bot Script
-echo "📥 Syncing ultimate bot engine..."
-curl -fsSL "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -o bots.js
+echo "📥 Fetching Your Bot Script..."
+curl -fsSL https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS -o bots.js
 
-# 5. Success Launch
-echo "🚀 FORCED DEPLOYMENT SUCCESSFUL! Launching interface..."
-node bots.js
+if [ -d "$PREFIX/bin" ]; then
+    printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$TARGET_DIR" > $PREFIX/bin/bots
+    chmod +x $PREFIX/bin/bots
+else
+    printf '#!/bin/bash\ncd "%s" && node bots.js\n' "$TARGET_DIR" > /usr/local/bin/bots
+    chmod +x /usr/local/bin/bots
+fi
+
+clear
+echo "========================================="
+echo "✅ INSTALLATION SUCCESSFUL!"
+echo "🎮 Run the program anywhere by typing: bots"
+echo "========================================="
