@@ -22,7 +22,7 @@
 There are many bot scripts out there, but few are truly customizable and hybrid. **OP_INJOY** is a fully-fledged bot swarm tool that runs effortlessly on Android (Termux), Linux Servers (Debian/Ubuntu), and Windows. It features intelligent delay joining, automated authorization fallback routines, and proactive anti-kick structures.
 
 ### Key Enhancements:
-* **Hybrid Connectivity**: Run Java (`mineflayer`) and Bedrock (`bedrock-protocol`) bots simultaneously.
+* **Hybrid Connectivity**: Run Java and Bedrock bots simultaneously.
 * **Smart Throttling**: 6-second sequential join delay to bypass rigid server-side anti-cheat configurations.
 * **Integrated Anti-AFK**: Continuous physical updates (sneaking & head movement) prevent server idle kicks.
 
