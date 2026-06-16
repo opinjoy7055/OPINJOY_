@@ -24,7 +24,7 @@ There are many bot scripts out there, but few are truly customizable and hybrid.
 
 
 ### Key Enhancements:
-* **Hybrid Connectivity**: Run Java (`mineflayer`) and Bedrock (`bedrock-protocol`) bots simultaneously.
+* **Hybrid Connectivity**: Run Java and Bedrock bots simultaneously.
 * **Smart Throttling**: 6-second sequential join delay to bypass rigid server-side anti-cheat configurations.
 * **Integrated Anti-AFK**: Continuous physical updates (sneaking & head movement) prevent server idle kicks
 
