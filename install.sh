@@ -1,6 +1,6 @@
 #!/bin/bash
 # ========================================================================
-# OP_INJOY Ultimate Universal Bot Swarm Installer (CROSS-PLATFORM FORCE MODE)
+# OP_INJOY Ultimate Universal Bot Swarm Installer (CROSS-PLATFORM ULTRA-FAST)
 # Supports: Android (Termux), Windows (Git Bash/MSYS), and Linux (Debian/Ubuntu)
 # ========================================================================
 
@@ -22,7 +22,7 @@ if [[ "$OS_TYPE" == *"MINGW"* ]] || [[ "$OS_TYPE" == *"MSYS"* ]] || [[ "$OS_TYPE
         $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User')
     }
     npm init -y
-    npm install mineflayer bedrock-protocol
+    npm install mineflayer bedrock-protocol --ignore-scripts
     Invoke-WebRequest -Uri "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -OutFile "bots.js"
     $currentPath = (Get-Location).Path
     $batContent = '@echo off' + [Environment]::NewLine + 'cd /d "' + $currentPath + '"' + [Environment]::NewLine + 'node bots.js'
@@ -51,8 +51,7 @@ elif [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
     termux-setup-storage
     pkg update -y
     pkg cache-clean
-    pkg reinstall cmake jsoncpp -y
-    pkg install nodejs python make clang cmake curl wget git -y
+    pkg install nodejs curl wget git -y
 
 else
     echo "🐧 Standard Linux Environment Detected!"
@@ -85,8 +84,8 @@ fi
 echo "⚙️ Forcing clean package initialization..."
 npm init -y > /dev/null
 
-echo "📥 Brute-forcing installation of mineflayer, minecraft-data, and bedrock-protocol..."
-npm install mineflayer@latest minecraft-data@latest bedrock-protocol --no-audit --no-fund --force
+echo "📥 Brute-forcing ULTRA-FAST installation of mineflayer and bedrock-protocol..."
+npm install mineflayer@latest minecraft-data@latest bedrock-protocol --ignore-scripts --no-audit --no-fund --force
 
 echo "📥 Fetching Your Bot Script..."
 curl -fsSL https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS -o bots.js
@@ -101,6 +100,6 @@ fi
 
 clear
 echo "========================================="
-echo "✅ INSTALLATION SUCCESSFUL!"
+echo "✅ ULTRA-FAST INSTALLATION SUCCESSFUL!"
 echo "🎮 Run the program anywhere by typing: bots"
 echo "========================================="
