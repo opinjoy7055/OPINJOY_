@@ -11,10 +11,9 @@
 
   [![Termux](https://img.shields.io/badge/Termux-Supported-00C853?style=for-the-badge&logo=android&logoColor=white&labelColor=1A1B26)](#)
   [![Linux](https://img.shields.io/badge/Linux-Supported-F5A900?style=for-the-badge&logo=linux&logoColor=white&labelColor=1A1B26)](#)
-  [![Windows](https://img.shields.io/badge/Windows_OS-Supported-0078D6?style=for-the-badge&logo=microsoft&logoColor=white&labelColor=1A1B26&v=2)](#)
+  [![Windows OS](https://img.shields.io/badge/⊞_Windows_OS-Supported-0078D6?style=for-the-badge&logoColor=white&labelColor=1A1B26)](#)
 
 </div>
-
 
 ---
 
