@@ -7,11 +7,11 @@
   **An advanced, hybrid, and dynamic Minecraft bot swarm deployment tool.**<br>
   It supports both Java and Bedrock editions simultaneously with automated Anti-AFK routines and smart scheduling.
   
-  [![Node.js](https://img.shields.io/badge/Node.js-v22-339933?style=for-the-badge&logo=nodedotjs&logoColor=white&labelColor=282A36)](#)
+  [![Node.js](https://img.shields.io/badge/Node.js-v22-FFFFFF?style=for-the-badge&logo=nodedotjs&logoColor=black&labelColor=FFD700)](#)
 
-  [![Termux](https://img.shields.io/badge/Termux-Supported-00C4CC?style=for-the-badge&logo=android&logoColor=white&labelColor=282A36)](#)
-  [![Linux](https://img.shields.io/badge/Linux-Supported-FFB000?style=for-the-badge&logo=linux&logoColor=white&labelColor=282A36)](#)
-  [![Windows](https://img.shields.io/badge/Windows-Supported-0078D6?style=for-the-badge&logo=windows&logoColor=white&labelColor=282A36)](#)
+  [![Termux](https://img.shields.io/badge/Termux-Supported-000000?style=for-the-badge&logo=android&logoColor=white&labelColor=00C853)](#)
+  [![Linux](https://img.shields.io/badge/Linux-Supported-FFEA00?style=for-the-badge&logo=linux&logoColor=white&labelColor=FF9800)](#)
+  [![Windows](https://img.shields.io/badge/Windows-Supported-0052CC?style=for-the-badge&logo=microsoft&logoColor=black&labelColor=87CEEB)](#)
 
 </div>
 
