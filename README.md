@@ -37,13 +37,13 @@ Apna terminal select karo, 1-line command copy karke paste karo aur Enter dabao.
 
 ### ⚡ 1. Linux & Termux Setup (Install)
 ```bash
-P="opinjoy7055/OPINJOY_/main/install.sh" && curl -fsSL "[https://raw.githubusercontent.com/$P](https://raw.githubusercontent.com/$P)" | bash
+curl -fsSL raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh | bash
 ```
 
 ### 🪟 2. Windows Setup (Install)
 > **IMPORTANT: ⚠️ OPEN POWERSHELL AS ADMINISTRATOR! ⚠️**
 ```powershell
-$P="opinjoy7055/OPINJOY_/main/install.ps1"; irm "[https://raw.githubusercontent.com/$P](https://raw.githubusercontent.com/$P)" | iex
+irm raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1 | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
@@ -74,12 +74,12 @@ Agar tum is script, iske shortcuts, aur sabhi downloaded files ko poori tarah ap
 
 ### 🗑️ 3. Linux & Termux (Uninstall)
 ```bash
-P="opinjoy7055/OPINJOY_/main/delete.sh" && curl -fsSL "[https://raw.githubusercontent.com/$P](https://raw.githubusercontent.com/$P)" | bash
+curl -fsSL raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh | bash
 ```
 
 ### 🗑️ 4. Windows (Uninstall)
 ```powershell
-$P="opinjoy7055/OPINJOY_/main/delete.ps1"; irm "[https://raw.githubusercontent.com/$P](https://raw.githubusercontent.com/$P)" | iex
+irm raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1 | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
