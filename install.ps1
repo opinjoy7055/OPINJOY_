@@ -1,5 +1,18 @@
 Set-ExecutionPolicy Bypass -Scope Process -Force
-Write-Host "🕷️ OP_INJOY Ultimate Spider Bot ka Windows setup start ho raha hai..." -ForegroundColor Cyan
+Write-Host "🕷️ OP_INJOY Ultimate Spider Bot system initialize ho raha hai..." -ForegroundColor Cyan
+
+$targetFile = "bots.js"
+
+# --- SMART UPDATE LOGIC ---
+if (Test-Path $targetFile) {
+    Write-Host "🔄 FAST UPDATE MODE: Purani script detect hui!" -ForegroundColor Yellow
+    Write-Host "📥 Latest script fetch karke purani file ko automatically replace kar rahe hain..." -ForegroundColor Cyan
+    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -OutFile $targetFile
+    Write-Host "✅ UPDATE SUCCESSFUL! Tumhari script latest version se replace ho gayi hai." -ForegroundColor Green
+    Write-Host "🎮 Run karne ke liye 'bots.bat' type karo!" -ForegroundColor Cyan
+    Exit
+}
+# --------------------------
 
 if (!(Get-Command node -ErrorAction SilentlyContinue)) {
     Write-Host "Node.js download aur install ho raha hai..." -ForegroundColor Yellow
@@ -21,6 +34,6 @@ $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii
 
 Clear-Host
 Write-Host "=========================================" -ForegroundColor Magenta
-Write-Host "✅ WINDOWS INSTALLATION SUCCESSFUL!" -ForegroundColor Green
+Write-Host "✅ FRESH WINDOWS INSTALLATION SUCCESSFUL!" -ForegroundColor Green
 Write-Host "🎮 Naya CMD ya PowerShell kholo aur 'bots.bat' likh kar Enter dabao!" -ForegroundColor Cyan
 Write-Host "=========================================" -ForegroundColor Magenta
