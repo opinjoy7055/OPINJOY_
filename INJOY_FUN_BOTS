@@ -58,7 +58,7 @@ async function startInteractiveMenu() {
   
   const editionChoice = (await ask(c.white + c.bold + 'Apna Choice batao (1-4)-» ' + c.reset)).trim()
   if (editionChoice === '4') {
-    console.clear() // 🧹 YAHAN FIX KIYA HAI! Ab terminal ekdum clean ho jayega.
+    console.clear() 
     console.log(c.red + c.bold + 'Script band ho rahi hai... Phir milenge! 🕷️' + c.reset)
     process.exit(0)
   }
@@ -74,7 +74,8 @@ async function startInteractiveMenu() {
   console.log(c.yellow + '\nBots ke piche (suffix) kya lagana hai?' + c.reset)
   console.log('1) Numbers (Jaise: ' + baseName + '7449)')
   console.log('2) Words (Jaise: ' + baseName + 'spider)')
-  const suffixChoice = (await ask(c.white + c.bold + 'Choice (1-2)-» ' + c.reset)).trim()
+  console.log('3) Koi change nahi (Bas: ' + baseName + ')') // <-- YE RAHI TUMHARI NAYI OPTION
+  const suffixChoice = (await ask(c.white + c.bold + 'Choice (1-3)-» ' + c.reset)).trim() // <-- Updated choice range
 
   refreshScreen()
   let javaVer = false;
@@ -152,8 +153,11 @@ async function startInteractiveMenu() {
 
   let currentBot = 1;
   
+  // <-- YAHAN BHI CHANGE KIYA HAI TAKI CHOICE 3 KAAM KARE
   function generateName(base, choice) {
-      if (choice === '2') {
+      if (choice === '3') {
+          return base; // Koi change nahi
+      } else if (choice === '2') {
           const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
           return `${base}${words[Math.floor(Math.random() * words.length)]}`;
       } else {
