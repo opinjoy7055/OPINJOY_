@@ -37,12 +37,12 @@ Apna terminal select karo, 1-line command copy karke paste karo aur Enter dabao.
 
 ### 🐧 1. Linux Setup (Debian / Ubuntu)
 ```bash
-bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
+curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) | bash
 ```
 
 ### 📱 2. Termux Setup (Android)
 ```bash
-bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
+curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) | bash
 ```
 
 ### 🪟 3. Windows Setup (PowerShell)
@@ -79,7 +79,7 @@ Agar tum is script, iske shortcuts, aur sabhi downloaded files ko poori tarah ap
 
 **Linux / Termux Ke Liye:**
 ```bash
-bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh))
+curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh) | bash
 ```
 
 **Windows (PowerShell Admin) Ke Liye:**
