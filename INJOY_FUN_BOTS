@@ -20,7 +20,7 @@ let bedrock
 try {
   bedrock = require('bedrock-protocol')
 } catch (e) {
-  console.log(c.red + c.bold + '⚠️ bedrock-protocol is missing!' + c.reset)
+  console.log(c.red + c.bold + '⚠️ bedrock-protocol nahi mila (missing)!' + c.reset)
 }
 
 const rl = readline.createInterface({
@@ -32,100 +32,145 @@ const ask = (query) => new Promise(resolve => rl.question(query, resolve))
 
 function refreshScreen() {
   console.clear()
-  console.log(c.cyan + c.bold + String.raw`========================================================================
+  console.log(c.magenta + c.bold + String.raw`========================================================================
 
- ██████╗ ██████╗       ██╗███╗   ██╗██╗ ██████╗ ██╗   ██╗
-██╔═══██╗██╔══██╗      ██║████╗  ██║██║██╔═══██╗╚██╗ ██╔╝
-██║   ██║██████╔╝█████╗██║██╔██╗ ██║██║██║   ██║ ╚████╔╝ 
-██║   ██║██╔═══╝ ╚════╝██║██║╚██╗██║██║██║   ██║  ╚██╔╝  
-╚██████╔╝██║           ██║██║ ╚████║██║╚██████╔╝   ██║   
- ╚═════╝ ╚═╝           ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝` + c.reset)
+ 🕷️ ██████╗ ██████╗       ██╗███╗   ██╗██╗ ██████╗ ██╗   ██╗ 🕷️
+    ██╔═══██╗██╔══██╗      ██║████╗  ██║██║██╔═══██╗╚██╗ ██╔╝
+    ██║   ██║██████╔╝█████╗██║██╔██╗ ██║██║██║   ██║ ╚████╔╝ 
+    ██║   ██║██╔═══╝ ╚════╝██║██║╚██╗██║██║██║   ██║  ╚██╔╝  
+    ╚██████╔╝██║           ██║██║ ╚████║██║╚██████╔╝   ██║   
+     ╚═════╝ ╚═╝           ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝` + c.reset)
                                                                   
-  console.log(c.green + c.bold + `                      POWERED BY OP_INJOY` + c.reset)
-  console.log(c.cyan + c.bold + `========================================================================` + c.reset)
+  console.log(c.green + c.bold + `                 ULTIMATE SPIDER BOT | POWERED BY OP_INJOY` + c.reset)
+  console.log(c.magenta + c.bold + `========================================================================` + c.reset)
   console.log()
 }
 
+const activeJavaBots = [];
+
 async function startInteractiveMenu() {
   refreshScreen()
-  console.log(c.cyan + c.bold + 'Q1. Which minecraft edition bot you need?' + c.reset)
+  console.log(c.cyan + c.bold + 'Q1. Tumhe kaunse Minecraft edition ka bot chahiye?' + c.reset)
   console.log(c.yellow + '1) Java bot')
   console.log('2) Bedrock bot')
-  console.log('3) Both java+bedrock')
-  console.log('4) Exit' + c.reset + '\n')
+  console.log('3) Dono (Java + Bedrock)')
+  console.log('4) Exit (Bahar niklo)' + c.reset + '\n')
   
-  const editionChoice = (await ask(c.white + c.bold + 'Choice (1-4)-» ' + c.reset)).trim()
+  const editionChoice = (await ask(c.white + c.bold + 'Apna Choice batao (1-4)-» ' + c.reset)).trim()
   if (editionChoice === '4') {
-    console.log(c.red + c.bold + 'Exiting script...' + c.reset)
+    console.log(c.red + c.bold + 'Script band ho rahi hai...' + c.reset)
     process.exit(0)
   }
 
   refreshScreen()
-  console.log(c.cyan + c.bold + 'Q2. Enter & Fill your Server Ip port (If port is default, just press enter)' + c.reset)
+  console.log(c.cyan + c.bold + 'Q2. Apna Server IP aur Port dalo (Agar default port hai toh bas Enter dabao)' + c.reset)
   const ip = (await ask(c.yellow + '1) Server IP-» ' + c.reset)).trim()
   const portInput = (await ask(c.yellow + '2) Server Port-» ' + c.reset)).trim()
   
   refreshScreen()
-  console.log(c.cyan + c.bold + 'Q3. Enter Bot Base Name?' + c.reset)
-  const baseName = (await ask(c.yellow + '1) Bot Name-» ' + c.reset)).trim()
+  console.log(c.cyan + c.bold + 'Q3. Bot ka Base Name aur Naming Style batao' + c.reset)
+  const baseName = (await ask(c.yellow + '1) Bot ka Base Name-» ' + c.reset)).trim()
+  console.log(c.yellow + '\nBots ke piche (suffix) kya lagana hai?' + c.reset)
+  console.log('1) Numbers (Jaise: ' + baseName + '7449)')
+  console.log('2) Words (Jaise: ' + baseName + 'spider)')
+  const suffixChoice = (await ask(c.white + c.bold + 'Choice (1-2)-» ' + c.reset)).trim()
 
   refreshScreen()
   let javaVer = false;
   let bedrockVer = false;
 
-  if (editionChoice === '1') {
-    console.log(c.cyan + c.bold + 'Q4. Enter Java edition bot version? (Press Enter for Auto-Detect)' + c.reset)
+  if (editionChoice === '1' || editionChoice === '3') {
+    console.log(c.cyan + c.bold + 'Q4. Java edition bot ka version dalo? (Auto-detect ke liye bas Enter dabao)' + c.reset)
     let jv = (await ask(c.yellow + '1) Java version-» ' + c.reset)).trim()
     if (jv) javaVer = jv;
-  } else if (editionChoice === '2') {
-    console.log(c.cyan + c.bold + 'Q4. Enter Bedrock edition bot version? (Press Enter for Auto-Detect)' + c.reset)
+  }
+  if (editionChoice === '2' || editionChoice === '3') {
+    console.log(c.cyan + c.bold + 'Q4b. Bedrock edition bot ka version dalo? (Auto-detect ke liye bas Enter dabao)' + c.reset)
     let bv = (await ask(c.yellow + '1) Bedrock version-» ' + c.reset)).trim()
-    if (bv) bedrockVer = bv;
-  } else if (editionChoice === '3') {
-    console.log(c.cyan + c.bold + 'Q4. Enter Both java+bedrock version? (Press Enter for Auto-Detect)' + c.reset)
-    let jv = (await ask(c.yellow + '1) Java version-» ' + c.reset)).trim()
-    let bv = (await ask(c.yellow + '2) Bedrock version-» ' + c.reset)).trim()
-    if (jv) javaVer = jv;
     if (bv) bedrockVer = bv;
   }
 
   refreshScreen()
-  console.log(c.cyan + c.bold + 'Q5. Select Deployment Mode' + c.reset)
-  console.log(c.yellow + '1) Limited bots (You decide how many)')
-  console.log('2) Unlimited bots (Bots join non-stop until you press Ctrl+C)' + c.reset + '\n')
+  console.log(c.cyan + c.bold + 'Q5. Deployment Mode select karo' + c.reset)
+  console.log(c.yellow + '1) Limited bots (Tum batao kitne bots bhejney hain)')
+  console.log('2) Unlimited bots (Bots lagatar join karenge jab tak Ctrl+C nahi dabaate)' + c.reset + '\n')
   const modeChoice = (await ask(c.white + c.bold + 'Choice (1-2)-» ' + c.reset)).trim()
 
   let botCount = Infinity
   if (modeChoice === '1') {
-    const botCountInput = (await ask(c.yellow + 'How many bots do you want?-» ' + c.reset)).trim()
+    const botCountInput = (await ask(c.yellow + 'Kitne bots chahiye?-» ' + c.reset)).trim()
     botCount = parseInt(botCountInput) || 1
   }
 
-  rl.close()
+  refreshScreen()
+  console.log(c.cyan + c.bold + 'Q6. Advanced Movements aur Custom Pathfinding' + c.reset)
+  console.log(c.yellow + '1) Idhar-udhar ghoomein (Walk Randomly)')
+  console.log('2) Uchal-kood karein (Jumping)')
+  console.log('3) Baith jayein (Sneak)')
+  console.log('4) Paas wale player ke piche chalein (Follow Closest Player)')
+  console.log('5) Kuch nahi (Shanti se khade rahein)' + c.reset + '\n')
+  const moveChoice = (await ask(c.white + c.bold + 'Choice (1-5)-» ' + c.reset)).trim()
+
+  refreshScreen()
+  console.log(c.cyan + c.bold + 'Q7. Global Chat Spam Module' + c.reset)
+  console.log(c.yellow + '1) Chat Spam ON karo')
+  console.log('2) Chat Spam OFF rakho' + c.reset + '\n')
+  const spamEnable = (await ask(c.white + c.bold + 'Choice (1-2)-» ' + c.reset)).trim()
+  
+  let spamMsg = "";
+  let spamCount = 0;
+  if (spamEnable === '1') {
+      spamMsg = (await ask(c.yellow + 'Kaunsa message spam karna hai?-» ' + c.reset)).trim()
+      const countInput = (await ask(c.yellow + 'Ek bot kitni baar message bheje?-» ' + c.reset)).trim()
+      spamCount = parseInt(countInput) || 5;
+  }
+
+  refreshScreen()
+  console.log(c.cyan + c.bold + 'Q8. Anti-Kick / Ban Bypass System' + c.reset)
+  console.log(c.yellow + '1) Kick hone par naye naam ke sath Auto-Reconnect karein (Ban bypass)')
+  console.log('2) Reconnect mat karna' + c.reset + '\n')
+  const reconnectChoice = (await ask(c.white + c.bold + 'Choice (1-2)-» ' + c.reset)).trim()
 
   refreshScreen()
   const javaPort = portInput ? parseInt(portInput) : 25565
   const bedrockPort = portInput ? parseInt(portInput) : 19132
 
-  console.log(c.magenta + c.bold + `🚀 Deploying ${botCount === Infinity ? 'UNLIMITED' : botCount} bots to ${ip}...` + c.reset)
-  if (botCount === Infinity) {
-    console.log(c.red + c.bold + '⚠️ Press [Ctrl + C] to stop the swarm at any time.' + c.reset)
-  }
+  console.log(c.magenta + c.bold + `🚀 Deploy kar rahe hain ${botCount === Infinity ? 'UNLIMITED' : botCount} bots ko ${ip} par...` + c.reset)
+  console.log(c.red + c.bold + '⚠️ Rukne ke liye kisi bhi waqt [Ctrl + C] dabao.' + c.reset)
+  console.log(c.green + c.bold + '💬 TERMINAL CHAT ON HAI: Yahan type karke Enter dabao, tumhare bots game me wahi message bhejenge!' + c.reset)
   console.log(c.cyan + '-----------------------------------------' + c.reset)
 
+  // Terminal Chat Listener
+  rl.on('line', (input) => {
+      if(input.trim() !== '') {
+          activeJavaBots.forEach(bot => {
+              try { bot.chat(input); } catch(e) {}
+          });
+      }
+  });
+
   let currentBot = 1;
+  
+  function generateName(base, choice) {
+      if (choice === '2') {
+          const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
+          return `${base}${words[Math.floor(Math.random() * words.length)]}`;
+      } else {
+          return `${base}${Math.floor(1000 + Math.random() * 9000)}`;
+      }
+  }
+
   function spawnNextBot() {
     if (currentBot > botCount) {
-      console.log(c.green + c.bold + '\n✅ All requested bots have been deployed!' + c.reset)
+      console.log(c.green + c.bold + '\n✅ Saare bots successfully server me bhej diye gaye hain!' + c.reset)
       return;
     }
 
-    const uniqueNumber = Math.floor(1000 + Math.random() * 9000)
-    const botName = `${baseName}_${uniqueNumber}`
+    const botName = generateName(baseName, suffixChoice);
 
-    if (editionChoice === '1' || editionChoice === '3') launchJavaBot(ip, javaPort, botName, javaVer)
+    if (editionChoice === '1' || editionChoice === '3') launchJavaBot(ip, javaPort, botName, javaVer, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName);
     if (editionChoice === '2' || editionChoice === '3') {
-      if (bedrock) launchBedrockBot(ip, bedrockPort, `${botName}_BR`, bedrockVer)
+      if (bedrock) launchBedrockBot(ip, bedrockPort, `${botName}BR`, bedrockVer, reconnectChoice, suffixChoice, baseName);
     }
 
     currentBot++;
@@ -135,43 +180,120 @@ async function startInteractiveMenu() {
   spawnNextBot()
 }
 
-function launchJavaBot(ip, port, username, version) {
-  console.log(c.cyan + `[Java] Deploying ${username}${version ? ` (v${version})` : ' (Auto-Detecting Version)'}...` + c.reset)
+function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName) {
+  console.log(c.cyan + `[Java] Bhej rahe hain ${username}${version ? ` (v${version})` : ' (Auto-Detecting)'}...` + c.reset)
+  
   const bot = mineflayer.createBot({ host: ip, port: port, username: username, version: version, physicsEnabled: true })
   
   bot.once('spawn', () => {
-    console.log(c.green + c.bold + `✅ [Java] ${username} successfully joined!` + c.reset)
+    console.log(c.green + c.bold + `✅ [Java] ${username} ne successfully join kar liya!` + c.reset)
+    activeJavaBots.push(bot);
     
+    // Auth bypass
     setTimeout(() => {
       bot.chat('/register OpInjoy123 OpInjoy123')
       setTimeout(() => bot.chat('/login OpInjoy123'), 2000)
     }, 5000)
 
-    setInterval(() => {
-      try {
-        bot.setControlState('sneak', true)
-        setTimeout(() => bot.setControlState('sneak', false), 400)
-        bot.look(bot.entity.yaw + (Math.random() > 0.5 ? 1 : -1), bot.entity.pitch)
-      } catch (e) {}
-    }, 10000)
+    // Movements
+    if (moveChoice === '1') {
+        setInterval(() => {
+            try {
+                bot.setControlState('forward', true);
+                setTimeout(() => bot.setControlState('forward', false), 2000);
+                bot.look(Math.random() * Math.PI * 2, 0);
+            } catch(e){}
+        }, 4000);
+    } else if (moveChoice === '2') {
+        setInterval(() => {
+            try {
+                bot.setControlState('jump', true);
+                setTimeout(() => bot.setControlState('jump', false), 1000);
+            } catch(e){}
+        }, 2000);
+    } else if (moveChoice === '3') {
+        bot.setControlState('sneak', true);
+    } else if (moveChoice === '4') {
+        setInterval(() => {
+            try {
+                const playerFilter = (entity) => entity.type === 'player' && entity.username !== bot.username;
+                const player = bot.nearestEntity(playerFilter);
+                if (player) {
+                    bot.lookAt(player.position.offset(0, player.height, 0));
+                    bot.setControlState('forward', true);
+                } else {
+                    bot.setControlState('forward', false);
+                }
+            } catch(e){}
+        }, 1000);
+    }
+
+    // Spam Module
+    if (spamEnable === '1' && spamCount > 0) {
+        let sent = 0;
+        const spamTimer = setInterval(() => {
+            if (sent >= spamCount) {
+                clearInterval(spamTimer);
+                return;
+            }
+            try { bot.chat(`${spamMsg} [${Math.floor(Math.random()*1000)}]`); } catch(e){}
+            sent++;
+        }, 3500); 
+    }
   })
 
-  bot.on('kicked', (reason) => console.log(c.red + c.bold + `❌ [Java] ${username} Kicked` + c.reset))
+  // Read Server Chat
+  bot.on('chat', (chatter, message) => {
+      if (chatter === bot.username) return;
+      console.log(c.magenta + `[GAME CHAT] ` + c.white + `${chatter}: ${message}` + c.reset);
+  });
+
+  bot.on('kicked', (reason) => console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${reason}` + c.reset))
   bot.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset))
+  
+  bot.on('end', () => {
+      const index = activeJavaBots.indexOf(bot);
+      if (index > -1) activeJavaBots.splice(index, 1);
+
+      if (reconnectChoice === '1') {
+          // Reconnect using the original baseName without underscore
+          const newName = generateName(baseName, suffixChoice);
+          console.log(c.yellow + c.bold + `🔄 [Java] Nayi identity ke sath Auto-Reconnect ho raha hai: ${newName} (10 seconds me)...` + c.reset);
+          setTimeout(() => {
+              launchJavaBot(ip, port, newName, version, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName);
+          }, 10000);
+      }
+  })
 }
 
-function launchBedrockBot(ip, port, username, version) {
-  console.log(c.blue + `[Bedrock] Deploying ${username}${version ? ` (v${version})` : ' (Auto-Detecting Version)'}...` + c.reset)
+function generateName(base, choice) {
+    if (choice === '2') {
+        const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
+        return `${base}${words[Math.floor(Math.random() * words.length)]}`;
+    } else {
+        return `${base}${Math.floor(1000 + Math.random() * 9000)}`;
+    }
+}
+
+function launchBedrockBot(ip, port, username, version, reconnectChoice, suffixChoice, baseName) {
+  console.log(c.blue + `[Bedrock] Bhej rahe hain ${username}${version ? ` (v${version})` : ' (Auto-Detecting)'}...` + c.reset)
   const options = { host: ip, port: port, username: username, offline: true }
   if (version) options.version = version;
   
   const client = bedrock.createClient(options)
   
   client.on('join', () => {
-    console.log(c.green + c.bold + `✅ [Bedrock] ${username} successfully joined!` + c.reset)
+    console.log(c.green + c.bold + `✅ [Bedrock] ${username} ne successfully join kar liya!` + c.reset)
   })
   
-  client.on('disconnect', (packet) => console.log(c.red + c.bold + `❌ [Bedrock] ${username} Kicked` + c.reset))
+  client.on('disconnect', (packet) => {
+      console.log(c.red + c.bold + `❌ [Bedrock] ${username} ko Kick kar diya gaya` + c.reset);
+      if (reconnectChoice === '1') {
+          const newName = generateName(baseName, suffixChoice) + "BR";
+          console.log(c.yellow + c.bold + `🔄 [Bedrock] Nayi identity ke sath Auto-Reconnect ho raha hai: ${newName} (10 seconds me)...` + c.reset);
+          setTimeout(() => launchBedrockBot(ip, port, newName, version, reconnectChoice, suffixChoice, baseName), 10000);
+      }
+  })
   client.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Bedrock] ${username} Error: ${err.message}` + c.reset))
 }
 
