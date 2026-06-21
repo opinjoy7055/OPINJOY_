@@ -32,17 +32,17 @@ const ask = (query) => new Promise(resolve => rl.question(query, resolve))
 
 function refreshScreen() {
   console.clear()
-  console.log(c.magenta + c.bold + String.raw`========================================================================
+  console.log(c.cyan + c.bold + String.raw`========================================================================
 
- 🕷️ ██████╗ ██████╗       ██╗███╗   ██╗██╗ ██████╗ ██╗   ██╗ 🕷️
-    ██╔═══██╗██╔══██╗      ██║████╗  ██║██║██╔═══██╗╚██╗ ██╔╝
-    ██║   ██║██████╔╝█████╗██║██╔██╗ ██║██║██║   ██║ ╚████╔╝ 
-    ██║   ██║██╔═══╝ ╚════╝██║██║╚██╗██║██║██║   ██║  ╚██╔╝  
-    ╚██████╔╝██║           ██║██║ ╚████║██║╚██████╔╝   ██║   
-     ╚═════╝ ╚═╝           ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝` + c.reset)
+ ██████╗ ██████╗       ██╗███╗   ██╗██╗ ██████╗ ██╗   ██╗
+██╔═══██╗██╔══██╗      ██║████╗  ██║██║██╔═══██╗╚██╗ ██╔╝
+██║   ██║██████╔╝█████╗██║██╔██╗ ██║██║██║   ██║ ╚████╔╝ 
+██║   ██║██╔═══╝ ╚════╝██║██║╚██╗██║██║██║   ██║  ╚██╔╝  
+╚██████╔╝██║           ██║██║ ╚████║██║╚██████╔╝   ██║   
+ ╚═════╝ ╚═╝           ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝    ╚═╝` + c.reset)
                                                                   
   console.log(c.green + c.bold + `                 ULTIMATE SPIDER BOT | POWERED BY OP_INJOY` + c.reset)
-  console.log(c.magenta + c.bold + `========================================================================` + c.reset)
+  console.log(c.cyan + c.bold + `========================================================================` + c.reset)
   console.log()
 }
 
@@ -58,7 +58,8 @@ async function startInteractiveMenu() {
   
   const editionChoice = (await ask(c.white + c.bold + 'Apna Choice batao (1-4)-» ' + c.reset)).trim()
   if (editionChoice === '4') {
-    console.log(c.red + c.bold + 'Script band ho rahi hai...' + c.reset)
+    console.clear() // 🧹 YAHAN FIX KIYA HAI! Ab terminal ekdum clean ho jayega.
+    console.log(c.red + c.bold + 'Script band ho rahi hai... Phir milenge! 🕷️' + c.reset)
     process.exit(0)
   }
 
@@ -256,7 +257,6 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
       if (index > -1) activeJavaBots.splice(index, 1);
 
       if (reconnectChoice === '1') {
-          // Reconnect using the original baseName without underscore
           const newName = generateName(baseName, suffixChoice);
           console.log(c.yellow + c.bold + `🔄 [Java] Nayi identity ke sath Auto-Reconnect ho raha hai: ${newName} (10 seconds me)...` + c.reset);
           setTimeout(() => {
@@ -264,15 +264,6 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
           }, 10000);
       }
   })
-}
-
-function generateName(base, choice) {
-    if (choice === '2') {
-        const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
-        return `${base}${words[Math.floor(Math.random() * words.length)]}`;
-    } else {
-        return `${base}${Math.floor(1000 + Math.random() * 9000)}`;
-    }
 }
 
 function launchBedrockBot(ip, port, username, version, reconnectChoice, suffixChoice, baseName) {
