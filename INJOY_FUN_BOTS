@@ -96,7 +96,6 @@ async function startInteractiveMenu() {
   const suffixChoice = (await ask(c.green + c.bold + 'Choice (1-3)-» ' + c.reset)).trim()
 
   refreshScreen()
-  // NAYA FEATURE: Custom Password
   console.log(c.yellow + c.bold + 'Q4. Bot ka Password dalo / Enter bot password' + c.reset)
   console.log(c.cyan + '(Khali chhodne par Auto-Unique password banega: OP_Name@123)' + c.reset)
   const customPassword = (await ask(c.green + c.bold + 'Password-» ' + c.reset)).trim()
@@ -154,9 +153,10 @@ async function startInteractiveMenu() {
 
   refreshScreen()
   console.log(c.yellow + c.bold + 'Q9. Anti-Kick / Ban Bypass System' + c.reset)
-  console.log(c.cyan + '1) Kick hone par naye naam ke sath Auto-Reconnect karein (Ban bypass)')
-  console.log('2) Reconnect mat karna' + c.reset + '\n')
-  const reconnectChoice = (await ask(c.green + c.bold + 'Choice (1-2)-» ' + c.reset)).trim()
+  console.log(c.cyan + '1) Naye naam ke sath Auto-Reconnect karein (Change Name & Bypass)')
+  console.log('2) Reconnect mat karna (Off)')
+  console.log('3) Same naam ke sath wapas Reconnect karein (Only Reconnect, No Name Change)' + c.reset + '\n')
+  const reconnectChoice = (await ask(c.green + c.bold + 'Choice (1-3)-» ' + c.reset)).trim()
 
   refreshScreen()
   
@@ -189,7 +189,6 @@ async function startInteractiveMenu() {
 
     const botName = generateName(baseName, suffixChoice);
 
-    // customPassword variable pass kar rahe hain
     if (editionChoice === '1' || editionChoice === '3') launchJavaBot(ip, javaPort, botName, javaVer, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, customPassword);
     if (editionChoice === '2' || editionChoice === '3') {
       if (bedrock) launchBedrockBot(ip, bedrockPort, `${botName}BR`, bedrockVer, reconnectChoice, suffixChoice, baseName);
@@ -211,14 +210,12 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
 
   const bot = mineflayer.createBot(botOptions)
   
-  // NAYA PASSWORD LOGIC: Agar custom password khali hai toh auto unique use karo
   const botPassword = customPassword !== "" ? customPassword : `OP_${username}@123`;
   
   bot.once('spawn', () => {
     console.log(c.green + c.bold + `✅ [Java] ${username} ne successfully join kar liya!` + c.reset)
     activeJavaBots.push(bot);
     
-    // SMART AUTH BYPASS: Pehle /register, phir 2 second baad /login
     setTimeout(() => {
       bot.chat(`/register ${botPassword} ${botPassword}`)
       setTimeout(() => {
@@ -226,7 +223,6 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
       }, 2000)
     }, 5000)
 
-    // Movements
     if (moveChoice === '1') {
         setInterval(() => {
             try {
@@ -259,7 +255,6 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
         }, 1000);
     }
 
-    // Spam Module
     if (spamEnable === '1' && spamCount > 0) {
         let sent = 0;
         const spamTimer = setInterval(() => {
@@ -273,18 +268,31 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
     }
   })
 
-  // GUI Anti-Bot Verification Bypass
+  // Center Pop-up (Verification Bypass) Update
+  bot.on('resourcePack', (url, hash) => {
+      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko Screen ke center mein Verification Pop-up mila! Bypassing...` + c.reset);
+      try {
+          bot.acceptResourcePack();
+          // Message update kar diya gaya hai!
+          console.log(c.green + `✅ [Java] ${username} ne 'Verification' button par click kar diya!` + c.reset);
+      } catch (e) {
+          console.log(c.red + `❌ Verification accept fail: ${e.message}` + c.reset);
+      }
+  });
+
   bot.on('windowOpen', (window) => {
-      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko Server Verification Pop-up mila! Auto-Bypassing...` + c.reset);
+      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko Server Chest GUI Pop-up mila! Auto-Bypassing...` + c.reset);
       setTimeout(() => {
           try {
-              const item = window.slots.find(i => i != null);
-              if (item) {
-                  bot.clickWindow(item.slot, 0, 0); 
-                  console.log(c.green + `🖱️ [Java] ${username} ne verification item par click kar diya!` + c.reset);
+              let targetItem = window.slots.find(i => i != null && !i.name.includes('glass') && !i.name.includes('pane'));
+              if (!targetItem) targetItem = window.slots.find(i => i != null); 
+              
+              if (targetItem) {
+                  bot.clickWindow(targetItem.slot, 0, 0); 
+                  console.log(c.green + `🖱️ [Java] ${username} ne '${targetItem.name}' par click kiya! (Slot: ${targetItem.slot})` + c.reset);
               }
           } catch(e) {
-              console.log(c.red + `❌ Verification bypass fail: ${e.message}` + c.reset);
+              console.log(c.red + `❌ GUI bypass fail: ${e.message}` + c.reset);
           }
       }, 2000);
   });
@@ -296,11 +304,7 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
 
   bot.on('kicked', (reason) => {
       let reasonStr = typeof reason === 'object' ? JSON.stringify(reason) : reason;
-      if (reasonStr.toLowerCase().includes('verification')) {
-          console.log(c.red + c.bold + `❌ [Java] ${username} ko "Bot Verification" fail hone par Kick mila!` + c.reset);
-      } else {
-          console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${reasonStr}` + c.reset);
-      }
+      console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${reasonStr}` + c.reset);
   });
   
   bot.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset))
@@ -314,6 +318,11 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
           console.log(c.yellow + c.bold + `🔄 [Java] Nayi identity ke sath Auto-Reconnect ho raha hai: ${newName} (10 seconds me)...` + c.reset);
           setTimeout(() => {
               launchJavaBot(ip, port, newName, version, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, customPassword);
+          }, 10000);
+      } else if (reconnectChoice === '3') {
+          console.log(c.yellow + c.bold + `🔄 [Java] Same naam (${username}) ke sath Auto-Reconnect ho raha hai (10 seconds me)...` + c.reset);
+          setTimeout(() => {
+              launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, customPassword);
           }, 10000);
       }
   })
@@ -336,6 +345,9 @@ function launchBedrockBot(ip, port, username, version, reconnectChoice, suffixCh
           const newName = generateName(baseName, suffixChoice) + "BR";
           console.log(c.yellow + c.bold + `🔄 [Bedrock] Nayi identity ke sath Auto-Reconnect ho raha hai: ${newName} (10 seconds me)...` + c.reset);
           setTimeout(() => launchBedrockBot(ip, port, newName, version, reconnectChoice, suffixChoice, baseName), 10000);
+      } else if (reconnectChoice === '3') {
+          console.log(c.yellow + c.bold + `🔄 [Bedrock] Same naam (${username}) ke sath Auto-Reconnect ho raha hai (10 seconds me)...` + c.reset);
+          setTimeout(() => launchBedrockBot(ip, port, username, version, reconnectChoice, suffixChoice, baseName), 10000);
       }
   })
   client.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Bedrock] ${username} Error: ${err.message}` + c.reset))
