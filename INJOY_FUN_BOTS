@@ -56,6 +56,18 @@ function refreshScreen() {
 
 const activeJavaBots = [];
 
+// FIX: Name generator ko Global Scope mein daal diya taaki har function isko access kar sake!
+function generateName(base, choice) {
+    if (choice === '3') {
+        return base; // Option 3: Exact same name (bina kisi suffix ke)
+    } else if (choice === '2') {
+        const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
+        return `${base}${words[Math.floor(Math.random() * words.length)]}`;
+    } else {
+        return `${base}${Math.floor(1000 + Math.random() * 9000)}`;
+    }
+}
+
 async function startInteractiveMenu() {
   refreshScreen()
   console.log(c.yellow + c.bold + 'Q1. Tumhe kaunse Minecraft edition ka bot chahiye?' + c.reset)
@@ -166,17 +178,6 @@ async function startInteractiveMenu() {
   console.log(c.cyan + '-----------------------------------------' + c.reset)
 
   let currentBot = 1;
-  
-  function generateName(base, choice) {
-      if (choice === '3') {
-          return base; // Option 3: Exact same name (bina kisi suffix ke)
-      } else if (choice === '2') {
-          const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
-          return `${base}${words[Math.floor(Math.random() * words.length)]}`;
-      } else {
-          return `${base}${Math.floor(1000 + Math.random() * 9000)}`;
-      }
-  }
 
   function spawnNextBot() {
     if (currentBot > botCount) {
@@ -271,7 +272,8 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
       console.log(c.magenta + `[GAME CHAT] ` + c.white + `${chatter}: ${message}` + c.reset);
   });
 
-  bot.on('kicked', (reason) => console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${reason}` + c.reset))
+  // FIX: JSON.stringify lagaya taaki [object Object] na dikhe aur exact reason pata chale.
+  bot.on('kicked', (reason) => console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${JSON.stringify(reason)}` + c.reset))
   bot.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset))
   
   bot.on('end', () => {
