@@ -1,47 +1,27 @@
 #!/bin/bash
 # ========================================================================
-# 🕷️ OP_INJOY Ultimate Spider Bot Installer (Hinglish Version)
-# Supports: Android (Termux), Windows (Git Bash/MSYS), and Linux
+# 🕷️ OP_INJOY Ultimate Spider Bot Installer & Smart Auto-Updater
 # ========================================================================
 
-echo "🕷️ OP_INJOY Ultimate Spider Bot ka setup start ho raha hai..."
+echo "🕷️ OP_INJOY Ultimate Spider Bot system initialize ho raha hai..."
 
 OS_TYPE="$(uname -s)"
 
-if [[ "$OS_TYPE" == *"MINGW"* ]] || [[ "$OS_TYPE" == *"MSYS"* ]] || [[ "$OS_TYPE" == *"CYGWIN"* ]]; then
-    echo "🪟 Windows OS detect hua!"
-    echo "⚙️ PowerShell ke zariye auto-install start kar rahe hain..."
-    
-    cat << 'EOF' > temp_install.ps1
-    Set-ExecutionPolicy Bypass -Scope Process -Force
-    if (!(Get-Command node -ErrorAction SilentlyContinue)) {
-        Write-Host "Node.js download aur install ho raha hai..."
-        winget install -e --id OpenJS.NodeJS --accept-package-agreements --accept-source-agreements
-        $env:Path = [System.Environment]::GetEnvironmentVariable('Path','Machine') + ';' + [System.Environment]::GetEnvironmentVariable('Path','User')
-    }
-    npm init -y
-    npm install mineflayer bedrock-protocol --ignore-scripts
-    Invoke-WebRequest -Uri "https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS" -OutFile "bots.js"
-    $currentPath = (Get-Location).Path
-    $batContent = '@echo off' + [Environment]::NewLine + 'cd /d "' + $currentPath + '"' + [Environment]::NewLine + 'node bots.js'
-    $batContent | Out-File -FilePath "$env:USERPROFILE\bots.bat" -Encoding ascii
-    [Environment]::SetEnvironmentVariable("Path", $env:Path + ";$env:USERPROFILE", "User")
-    clear
-    Write-Host "========================================="
-    Write-Host "✅ WINDOWS INSTALLATION POORI HO GAYI HAI!"
-    Write-Host "🎮 Naya CMD ya PowerShell kholo aur 'bots.bat' likh kar Enter dabao!"
-    Write-Host "========================================="
-EOF
-
-    powershell.exe -NoProfile -ExecutionPolicy Bypass -File temp_install.ps1
-    rm -f temp_install.ps1
-    exit 0
-
-elif [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
+if [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
     echo "📱 Termux (Android) detect hua!"
     TARGET_DIR="$HOME/OP_INJOY_SWARM"
     
-    rm -rf "$TARGET_DIR" 2>/dev/null
+    # --- SMART UPDATE LOGIC ---
+    if [ -f "$TARGET_DIR/bots.js" ]; then
+        echo "🔄 FAST UPDATE MODE: Purani script detect hui!"
+        echo "📥 Latest script fetch karke purani file ko replace kar rahe hain..."
+        curl -fsSL https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS -o "$TARGET_DIR/bots.js"
+        echo "✅ UPDATE SUCCESSFUL! Tumhari script latest version se replace ho gayi hai."
+        echo "🎮 Run karne ke liye type karo: bots"
+        exit 0
+    fi
+    # --------------------------
+
     mkdir -p "$TARGET_DIR"
     cd "$TARGET_DIR" || { echo "❌ ERROR: $TARGET_DIR nahi khul raha"; exit 1; }
 
@@ -53,14 +33,25 @@ elif [ -d "$PREFIX/bin" ] && command -v pkg >/dev/null 2>&1; then
 
 else
     echo "🐧 Linux Environment detect hua!"
+    TARGET_DIR="$HOME/OP_INJOY_SWARM"
+    
+    # --- SMART UPDATE LOGIC ---
+    if [ -f "$TARGET_DIR/bots.js" ]; then
+        echo "🔄 FAST UPDATE MODE: Purani script detect hui!"
+        echo "📥 Latest script fetch karke purani file ko replace kar rahe hain..."
+        curl -fsSL https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/INJOY_FUN_BOTS -o "$TARGET_DIR/bots.js"
+        echo "✅ UPDATE SUCCESSFUL! Tumhari script latest version se replace ho gayi hai."
+        echo "🎮 Run karne ke liye type karo: bots"
+        exit 0
+    fi
+    # --------------------------
+
     if [ "$EUID" -ne 0 ]; then
         echo "❌ Permission Denied: Is script ko root (sudo) access chahiye."
         echo "💡 Aise run karo: sudo bash install.sh"
         exit 1
     fi
-    TARGET_DIR="$HOME/OP_INJOY_SWARM"
     
-    rm -rf "$TARGET_DIR" 2>/dev/null
     mkdir -p "$TARGET_DIR"
     cd "$TARGET_DIR" || { echo "❌ ERROR: $TARGET_DIR nahi khul raha"; exit 1; }
 
@@ -97,6 +88,6 @@ fi
 
 clear
 echo "========================================="
-echo "✅ INSTALLATION SUCCESSFUL! MUBARAK HO!"
+echo "✅ FRESH INSTALLATION SUCCESSFUL! MUBARAK HO!"
 echo "🎮 Kahi bhi terminal mein type karo: bots"
 echo "========================================="
