@@ -17,7 +17,6 @@ const c = {
 }
 
 // --- CTRL+C (SIGINT) HANDLER ---
-// Jab bhi Ctrl+C dabega, yeh terminal ko clear karke exit karega
 process.on('SIGINT', () => {
   console.clear()
   console.log(c.red + c.bold + 'Script band ho rahi hai... Phir milenge! 🕷️' + c.reset)
@@ -56,10 +55,9 @@ function refreshScreen() {
 
 const activeJavaBots = [];
 
-// FIX: Name generator ko Global Scope mein daal diya taaki har function isko access kar sake!
 function generateName(base, choice) {
     if (choice === '3') {
-        return base; // Option 3: Exact same name (bina kisi suffix ke)
+        return base; 
     } else if (choice === '2') {
         const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
         return `${base}${words[Math.floor(Math.random() * words.length)]}`;
@@ -156,7 +154,6 @@ async function startInteractiveMenu() {
 
   refreshScreen()
   
-  // FIX: Agar port khali chhoda gaya hai, toh Java ke liye "null" bhejo taaki IP wala SRV lookup kaam kare
   const javaPort = portInput ? parseInt(portInput) : null
   const bedrockPort = portInput ? parseInt(portInput) : 19132
 
@@ -165,7 +162,6 @@ async function startInteractiveMenu() {
   
   if (spamEnable === '3') {
       console.log(c.green + c.bold + '💬 TERMINAL CHAT ON HAI: Yahan terminal me jo bhi type karoge, wo server me jayega!' + c.reset)
-      // Terminal Chat Listener (Only active if option 3 is chosen)
       rl.on('line', (input) => {
           if(input.trim() !== '') {
               activeJavaBots.forEach(bot => {
@@ -203,20 +199,22 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
   console.log(c.cyan + `[Java] Bhej rahe hain ${username}${version ? ` (v${version})` : ' (Auto-Detecting)'}...` + c.reset)
   
   const botOptions = { host: ip, username: username, physicsEnabled: true }
-  // FIX: Agar port available hai tabhi bhejo, nahi toh IP se SRV nikal lega
   if (port) botOptions.port = port;
   if (version) botOptions.version = version;
 
   const bot = mineflayer.createBot(botOptions)
   
+  // FIX 1: Unique Password Generator
+  const botPassword = `OP_${username}@123`;
+  
   bot.once('spawn', () => {
     console.log(c.green + c.bold + `✅ [Java] ${username} ne successfully join kar liya!` + c.reset)
     activeJavaBots.push(bot);
     
-    // Auth bypass
+    // Use Unique Password for Auth Bypass
     setTimeout(() => {
-      bot.chat('/register OpInjoy123 OpInjoy123')
-      setTimeout(() => bot.chat('/login OpInjoy123'), 2000)
+      bot.chat(`/register ${botPassword} ${botPassword}`)
+      setTimeout(() => bot.chat(`/login ${botPassword}`), 2000)
     }, 5000)
 
     // Movements
@@ -266,14 +264,39 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
     }
   })
 
-  // Read Server Chat
+  // FIX 2: GUI Anti-Bot Verification Bypass
+  bot.on('windowOpen', (window) => {
+      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko Server Verification Pop-up mila! Auto-Bypassing...` + c.reset);
+      // Human-like delay of 2 seconds before clicking
+      setTimeout(() => {
+          try {
+              // Find the first available item slot and click it
+              const item = window.slots.find(i => i != null);
+              if (item) {
+                  bot.clickWindow(item.slot, 0, 0); // 0 = left click, 0 = single click
+                  console.log(c.green + `🖱️ [Java] ${username} ne verification item par click kar diya!` + c.reset);
+              }
+          } catch(e) {
+              console.log(c.red + `❌ Verification bypass fail: ${e.message}` + c.reset);
+          }
+      }, 2000);
+  });
+
   bot.on('chat', (chatter, message) => {
       if (chatter === bot.username) return;
       console.log(c.magenta + `[GAME CHAT] ` + c.white + `${chatter}: ${message}` + c.reset);
   });
 
-  // FIX: JSON.stringify lagaya taaki [object Object] na dikhe aur exact reason pata chale.
-  bot.on('kicked', (reason) => console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${JSON.stringify(reason)}` + c.reset))
+  bot.on('kicked', (reason) => {
+      let reasonStr = typeof reason === 'object' ? JSON.stringify(reason) : reason;
+      // Agar JSON reason me 'VERIFICATION' ya us jaisa kuch milta hai, toh clean message dikhaye
+      if (reasonStr.toLowerCase().includes('verification')) {
+          console.log(c.red + c.bold + `❌ [Java] ${username} ko "Bot Verification" fail hone par Kick mila!` + c.reset);
+      } else {
+          console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${reasonStr}` + c.reset);
+      }
+  });
+  
   bot.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset))
   
   bot.on('end', () => {
