@@ -35,20 +35,15 @@ Bahut saari bot scripts available hain, par kuch hi sachi mein customizable aur 
 
 Apna terminal select karo, 1-line command copy karke paste karo aur Enter dabao. Sab kuch automatically install ho jayega!
 
-### 🐧 1. Linux Setup (Debian / Ubuntu)
+### ⚡ 1. Linux & Termux Setup (Install)
 ```bash
-curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) | bash
+curl -fsSL [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) | bash
 ```
 
-### 📱 2. Termux Setup (Android)
-```bash
-curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) | bash
-```
-
-### 🪟 3. Windows Setup (PowerShell)
+### 🪟 2. Windows Setup (Install)
 > **IMPORTANT: ⚠️ OPEN POWERSHELL AS ADMINISTRATOR! ⚠️**
 ```powershell
-irm [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1) | iex
+irm [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1) | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
@@ -77,14 +72,14 @@ bots.bat
 
 Agar tum is script, iske shortcuts, aur sabhi downloaded files ko poori tarah apne system se hatana chahte ho, toh bas yeh command run karo:
 
-**Linux / Termux Ke Liye:**
+### 🗑️ 3. Linux & Termux (Uninstall)
 ```bash
-curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh) | bash
+curl -fsSL [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh) | bash
 ```
 
-**Windows (PowerShell Admin) Ke Liye:**
+### 🗑️ 4. Windows (Uninstall)
 ```powershell
-irm [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1) | iex
+irm [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1) | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
