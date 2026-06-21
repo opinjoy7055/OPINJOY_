@@ -11,7 +11,7 @@
 
   [![Termux](https://img.shields.io/badge/Termux-Supported-1A1B26?style=for-the-badge&logo=android&logoColor=white&labelColor=00C853)](#)
   [![Linux](https://img.shields.io/badge/Linux-Supported-1A1B26?style=for-the-badge&logo=linux&logoColor=white&labelColor=F5A900)](#)
-  [![Windows OS](https://img.shields.io/badge/⊞_Windows_OS-Supported-1A1B26?style=for-the-badge&logoColor=white&labelColor=0078D6)](#)
+  [![Windows OS](https://img.shields.io/badge/Windows_OS-Supported-1A1B26?style=for-the-badge&logo=windows11&logoWidth=22&logoColor=white&labelColor=0078D6&cache=bypass)](#)
 
 </div>
 
@@ -45,10 +45,10 @@ bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/i
 bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
 ```
 
-### 🪟 3. Windows Setup (Git Bash / PowerShell)
-> **IMPORTANT: ⚠️ OPEN AS ADMINISTRATOR! ⚠️**
-```bash
-bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh))
+### 🪟 3. Windows Setup (PowerShell)
+> **IMPORTANT: ⚠️ OPEN POWERSHELL AS ADMINISTRATOR! ⚠️**
+```powershell
+irm [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1) | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
@@ -77,10 +77,34 @@ bots.bat
 
 Agar tum is script, iske shortcuts, aur sabhi downloaded files ko poori tarah apne system se hatana chahte ho, toh bas yeh command run karo:
 
-**Linux / Termux / GitBash Ke Liye:**
+**Linux / Termux Ke Liye:**
 ```bash
 bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh))
 ```
+
+**Windows (PowerShell Admin) Ke Liye:**
+```powershell
+irm [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1) | iex
+```
+
+<p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
+
+---
+
+## 🔗 Feature Checklist & To-do
+
+- [x] Java Bots Support
+- [x] Bedrock Bots Support 
+- [x] Sabhi Environments Ke Liye Auto-Installers
+- [x] Automatic Server Version Detect Karna
+- [x] Offline servers ke liye auto `/register` aur `/login`
+- [x] Precision Join Throttling (6-second delay loop)
+- [x] Unlimited Bots Deploy Karne Ka Option
+- [x] Anti-AFK Routines (Auto Sneak & Movement)
+- [x] Advanced Pathfinding & Complex Movements
+- [x] Custom Global Chat Spam Module
+- [x] Terminal Sync Chat (Terminal se bots ko chat karao)
+- [x] Kick/Ban hone par naye naam se Auto-Reconnect
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
 
@@ -90,7 +114,18 @@ bash <(curl -fsSL [https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/d
 
 Copyright (c) 2026 OP_INJOY. All Rights Reserved. Proprietary and confidential.
 
-"OP_INJOY Ultimate Spider Bot" script poori tarah OP_INJOY ki property hai. Tum ise use kar sakte ho par mere permission ke bina modify ya re-upload karna mana hai.
+"OP_INJOY Ultimate Spider Bot" script aur iska poora code sirf OP_INJOY ki property hai.
+
+* **✅ TUM KAR SAKTE HO:** Is tool ko apne bots deploy karne aur manage karne ke liye bindass use karo.
+* **❌ TUM NAHI KAR SAKTE:** Mere permission ke bina is code ko copy, modify, distribute, ya re-upload karna bilkul mana hai. Credits hatana strictly prohibited hai.
+
+<p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
+
+---
+
+## ❤️ Support This Project
+
+Agar yeh tool tumhe pasand aaya aur tumhare kaam aaya, toh repo par 💫 **Star** zaroor dena! Tumhara support hi aage nayi updates laane me madad karega.
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
 
