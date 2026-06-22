@@ -4,14 +4,13 @@
   
   # 🕷️ OP_INJOY 🕷️ Ultimate Spider Bot
   
-  **Ek advanced, hybrid, aur dynamic Minecraft bot swarm deployment tool.**<br>
-  Yeh Java aur Bedrock dono editions ko ek saath support karta hai, jisme automated Anti-AFK routines aur smart scheduling inbuilt hai.
+  **Ek Advanced, Hybrid, aur Dynamic Minecraft Bot Swarm Deployment Tool.**<br>
+  Yeh Java aur Bedrock dono editions ko ek saath support karta hai, jisme **Sonar Anti-Bot Bypass**, Smart Scheduling, aur Auto-Updater inbuilt hai.
   
   [![Node.js](https://img.shields.io/badge/Node.js-v22-1A1B26?style=for-the-badge&logo=nodedotjs&logoColor=white&labelColor=339933)](#)
-
   [![Termux](https://img.shields.io/badge/Termux-Supported-1A1B26?style=for-the-badge&logo=android&logoColor=white&labelColor=00C853)](#)
   [![Linux](https://img.shields.io/badge/Linux-Supported-1A1B26?style=for-the-badge&logo=linux&logoColor=white&labelColor=F5A900)](#)
-  [![Windows OS](https://img.shields.io/badge/Windows_OS-Supported-1A1B26?style=for-the-badge&logo=windows11&logoWidth=22&logoColor=white&labelColor=0078D6&cache=bypass)](#)
+  [![Windows OS](https://img.shields.io/badge/⊞_Windows_OS-Supported-1A1B26?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6)](#)
 
 </div>
 
@@ -19,13 +18,14 @@
 
 ## 🌐 Project Ke Baare Mein
 
-Bahut saari bot scripts available hain, par kuch hi sachi mein customizable aur hybrid hain. **OP_INJOY** ek fully-fledged bot swarm tool hai jo Android (Termux), Linux Servers (Debian/Ubuntu), aur Windows par makhan ki tarah chalta hai. Isme intelligent delay joining, auto-reconnect, aur anti-kick features hain.
+Bahut saari bot scripts available hain, par kuch hi sachi mein customizable, hybrid aur **Anti-Bot secured** hain. **OP_INJOY** ek fully-fledged bot swarm tool hai jo Android (Termux), Linux Servers (Debian/Ubuntu), aur Windows par makhan ki tarah chalta hai. 
 
-### Main Features:
-* **Hybrid Connectivity**: Java aur Bedrock bots ek sath chalao.
-* **Smart Throttling**: 6-second ka join delay taaki server ka anti-cheat ban na kare.
-* **Integrated Anti-AFK**: Tumhare bots lagatar move karte rahenge taaki AFK kick na mile.
-* **Terminal Chat & Spam**: Seedha terminal se type karke saare bots se message bhejo.
+### 🚀 Ultimate Features:
+* **Anti-Bot & Sonar Bypass**: GUI Menus aur Resource Pack Pop-ups ko human-like delay ke sath auto-bypass karta hai.
+* **4-Gear Joining Speed**: Apni zarurat ke hisaab se speed chuno - `Safe`, `Normal`, `Ultra`, ya `Hacker` (Forceful Brute-force).
+* **Smart Auth System**: Tumhare custom password ke sath automatically `/register` aur `/login` handle karta hai.
+* **Terminal In-Game Chat**: Apne terminal se type karke bots ke zariye game server me message bhejo.
+* **Smart Auto-Updater**: Ek baar install karne ke baad, dubara command run karne par bina error ke script automatically latest version par update ho jati hai.
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
 
@@ -33,17 +33,17 @@ Bahut saari bot scripts available hain, par kuch hi sachi mein customizable aur 
 
 ## ⚡ Kaise Start Karein (One-Click Installations)
 
-Apna terminal select karo, 1-line command copy karke paste karo aur Enter dabao. Sab kuch automatically install ho jayega!
+Apna terminal select karo, 1-line command copy karke paste karo aur Enter dabao. Sab kuch automatically install ho jayega! *(Agar pehle se install hai, toh yahi command tumhari script ko naye version par Update kar degi).*
 
-### ⚡ 1. Linux & Termux Setup (Install)
+### ⚡ 1. Linux & Termux Setup (Install / Update)
 ```bash
-curl -fsSL raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh | bash
+curl -fsSL [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) | bash
 ```
 
-### 🪟 2. Windows Setup (Install)
+### 🪟 2. Windows Setup (Install / Update)
 > **IMPORTANT: ⚠️ OPEN POWERSHELL AS ADMINISTRATOR! ⚠️**
 ```powershell
-irm raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1 | iex
+irm [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1) | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
@@ -74,32 +74,31 @@ Agar tum is script, iske shortcuts, aur sabhi downloaded files ko poori tarah ap
 
 ### 🗑️ 3. Linux & Termux (Uninstall)
 ```bash
-curl -fsSL raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh | bash
+curl -fsSL [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh) | bash
 ```
 
 ### 🗑️ 4. Windows (Uninstall)
 ```powershell
-irm raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1 | iex
+irm [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1) | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
 
 ---
 
-## 🔗 Feature Checklist & To-do
+## 🔗 Feature Checklist & Updates
 
-- [x] Java Bots Support
-- [x] Bedrock Bots Support 
-- [x] Sabhi Environments Ke Liye Auto-Installers
-- [x] Automatic Server Version Detect Karna
-- [x] Offline servers ke liye auto `/register` aur `/login`
-- [x] Precision Join Throttling (6-second delay loop)
-- [x] Unlimited Bots Deploy Karne Ka Option
-- [x] Anti-AFK Routines (Auto Sneak & Movement)
-- [x] Advanced Pathfinding & Complex Movements
+- [x] Java Bots & Bedrock Bots Support
+- [x] Sabhi Environments Ke Liye Smart Auto-Installers & Updaters
+- [x] Automatic Server Version & Port Detect Karna (SRV Lookup)
+- [x] Smart `/register` aur `/login` Fallback System (Custom Passwords)
+- [x] **New:** 4-Speed Bot Joining Engine (Safe to Hacker Mode)
+- [x] **New:** Sonar Anti-Bot Bypass (Auto-Accept Resource Packs & GUI Checks)
+- [x] Anti-AFK Routines (Auto Sneak, Jump, & Complex Movements)
 - [x] Custom Global Chat Spam Module
 - [x] Terminal Sync Chat (Terminal se bots ko chat karao)
-- [x] Kick/Ban hone par naye naam se Auto-Reconnect
+- [x] Advanced Auto-Reconnect (Choose: Change Name ya Keep Same Name)
+- [x] Colorful UI & Clean Terminal Exit (`Ctrl+C` Handler)
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
 
