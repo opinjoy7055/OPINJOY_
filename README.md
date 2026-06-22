@@ -8,6 +8,7 @@
   Yeh Java aur Bedrock dono editions ko ek saath support karta hai, jisme **Sonar Anti-Bot Bypass**, Smart Scheduling, aur Auto-Updater inbuilt hai.
   
   [![Node.js](https://img.shields.io/badge/Node.js-v22-1A1B26?style=for-the-badge&logo=nodedotjs&logoColor=white&labelColor=339933)](#)
+  
   [![Termux](https://img.shields.io/badge/Termux-Supported-1A1B26?style=for-the-badge&logo=android&logoColor=white&labelColor=00C853)](#)
   [![Linux](https://img.shields.io/badge/Linux-Supported-1A1B26?style=for-the-badge&logo=linux&logoColor=white&labelColor=F5A900)](#)
   [![Windows OS](https://img.shields.io/badge/⊞_Windows_OS-Supported-1A1B26?style=for-the-badge&logo=windows&logoColor=white&labelColor=0078D6)](#)
@@ -37,13 +38,13 @@ Apna terminal select karo, 1-line command copy karke paste karo aur Enter dabao.
 
 ### ⚡ 1. Linux & Termux Setup (Install / Update)
 ```bash
-curl -fsSL [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh) | bash
+curl -fsSL raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.sh | bash
 ```
 
 ### 🪟 2. Windows Setup (Install / Update)
 > **IMPORTANT: ⚠️ OPEN POWERSHELL AS ADMINISTRATOR! ⚠️**
 ```powershell
-irm [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1) | iex
+irm raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/install.ps1 | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
@@ -74,12 +75,12 @@ Agar tum is script, iske shortcuts, aur sabhi downloaded files ko poori tarah ap
 
 ### 🗑️ 3. Linux & Termux (Uninstall)
 ```bash
-curl -fsSL [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh) | bash
+curl -fsSL raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.sh | bash
 ```
 
 ### 🗑️ 4. Windows (Uninstall)
 ```powershell
-irm [raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1](https://raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1) | iex
+irm raw.githubusercontent.com/opinjoy7055/OPINJOY_/main/delete.ps1 | iex
 ```
 
 <p align="right">(<a href="#readme-top">Upar Jao</a>)</p>
