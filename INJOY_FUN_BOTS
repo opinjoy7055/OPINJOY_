@@ -376,28 +376,39 @@ function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, sp
               console.log(c.green + `🖱️ [Java] ${username} ne Resource Pack 'Yes' par click kar diya!` + c.reset);
               setTimeout(doAuth, 2000);
           } catch (e) {
-              console.log(c.red + `❌ Attempt fail: ${e.message}` + c.reset);
+              console.log(c.red + `❌ [Java] ${username} Attempt fail: ${e.message}` + c.reset);
           }
       }, guiDelay);
   });
 
   bot.on('windowOpen', (window) => {
       clearTimeout(defaultAuthTimer); 
-      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko GUI Pop-up (Verification) mila! Attempting...` + c.reset);
+      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} GUI Pop-up detected! Attempting...` + c.reset);
+      
       setTimeout(() => {
           try {
-              let targetItem = window.slots.find(i => i != null && !i.name.includes('glass') && !i.name.includes('pane'));
-              if (!targetItem) targetItem = window.slots.find(i => i != null); 
+              // Sonar often uses specific slots for captcha items. 
+              // We filter out decoration (glass panes, barriers) and pick the first interactable item.
+              const targetItem = window.slots.find(i => 
+                  i != null && 
+                  !i.name.includes('glass') && 
+                  !i.name.includes('pane') &&
+                  !i.name.includes('barrier')
+              );
               
               if (targetItem) {
                   bot.clickWindow(targetItem.slot, 0, 0); 
-                  console.log(c.green + `🖱️ [Java] ${username} ne '${targetItem.name}' par click attempt kiya! (Slot: ${targetItem.slot})` + c.reset);
-                  setTimeout(doAuth, 2000);
+                  console.log(c.green + `🖱️ [Java] ${username} Clicked item '${targetItem.name}' in slot ${targetItem.slot}` + c.reset);
+                  
+                  // Add a small delay before auth to ensure the window closes
+                  setTimeout(doAuth, 1500);
+              } else {
+                  console.log(c.red + `❌ [Java] ${username} No valid attempt item found in GUI.` + c.reset);
               }
           } catch(e) {
-              console.log(c.red + `❌ GUI attempt fail: ${e.message}` + c.reset);
+              console.log(c.red + `❌ [Java] ${username} Attempt error: ${e.message}` + c.reset);
           }
-      }, guiDelay);
+      }, guiDelay); // Maintained guiDelay for your Speed Options!
   });
 
   bot.on('chat', (chatter, message) => {
