@@ -120,7 +120,6 @@ async function startInteractiveMenu() {
     
     else if (step === 3) {
       console.log(c.yellow + c.bold + 'Q3. Server IP & Port:' + c.reset)
-      // FIX: Cleaned up the input message. No more unnecessary formatting text.
       console.log(c.magenta + '(Peeche jane ke liye "back" likhein)' + c.reset)
       ipInput = (await ask(c.green + c.bold + 'IP (Port ke sath ya bina)-» ' + c.reset)).trim()
       
@@ -290,9 +289,10 @@ function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, sp
 
   const bot = mineflayer.createBot(botOptions)
   
-  // ANTI-BOT DELAY MAPPING
+  // DELAY MAPPING
   let guiDelay = 3000;
   let reconnectWait = 10000;
+  let dynamicReconnectWait = reconnectWait; // Yeh Sonar kick ke hisab se change hoga
   
   if (speedChoice === '1') { guiDelay = 3000; reconnectWait = 10000; } // Normal
   else if (speedChoice === '2') { guiDelay = 5500; reconnectWait = 15000; } // Anti-Bot
@@ -304,7 +304,7 @@ function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, sp
   function doAuth() {
       if (authHandled) return;
       authHandled = true;
-      console.log(c.magenta + `🔑 [Java] ${username} Verification pass. Auth Bypass shuru (Pass: ${botPassword})...` + c.reset);
+      console.log(c.magenta + `🔑 [Java] ${username} Auth Attempt shuru (Pass: ${botPassword})...` + c.reset);
       bot.chat(`/register ${botPassword} ${botPassword}`);
       setTimeout(() => {
           bot.chat(`/login ${botPassword}`);
@@ -365,23 +365,25 @@ function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, sp
     }
   })
 
+  // === ATTEMPT & RECONNECT LOGIC (NOT BYPASSING) ===
+  
   bot.on('resourcePack', (url, hash) => {
       clearTimeout(defaultAuthTimer); 
-      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko Resource Pack Pop-up mila! (${guiDelay}ms delay lag raha hai)...` + c.reset);
+      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko Resource Pack (Verification) Pop-up mila! Attempting...` + c.reset);
       setTimeout(() => {
           try {
               bot.acceptResourcePack();
-              console.log(c.green + `✅ [Java] ${username} ne Resource Pack 'Yes/Verification' par click kar diya!` + c.reset);
+              console.log(c.green + `🖱️ [Java] ${username} ne Resource Pack 'Yes' par click kar diya!` + c.reset);
               setTimeout(doAuth, 2000);
           } catch (e) {
-              console.log(c.red + `❌ Bypass fail: ${e.message}` + c.reset);
+              console.log(c.red + `❌ Attempt fail: ${e.message}` + c.reset);
           }
       }, guiDelay);
   });
 
   bot.on('windowOpen', (window) => {
       clearTimeout(defaultAuthTimer); 
-      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko GUI Pop-up mila! Bypassing in ${guiDelay}ms...` + c.reset);
+      console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko GUI Pop-up (Verification) mila! Attempting...` + c.reset);
       setTimeout(() => {
           try {
               let targetItem = window.slots.find(i => i != null && !i.name.includes('glass') && !i.name.includes('pane'));
@@ -389,11 +391,11 @@ function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, sp
               
               if (targetItem) {
                   bot.clickWindow(targetItem.slot, 0, 0); 
-                  console.log(c.green + `🖱️ [Java] ${username} ne '${targetItem.name}' par click kiya! (Slot: ${targetItem.slot})` + c.reset);
+                  console.log(c.green + `🖱️ [Java] ${username} ne '${targetItem.name}' par click attempt kiya! (Slot: ${targetItem.slot})` + c.reset);
                   setTimeout(doAuth, 2000);
               }
           } catch(e) {
-              console.log(c.red + `❌ GUI bypass fail: ${e.message}` + c.reset);
+              console.log(c.red + `❌ GUI attempt fail: ${e.message}` + c.reset);
           }
       }, guiDelay);
   });
@@ -406,6 +408,12 @@ function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, sp
   bot.on('kicked', (reason) => {
       let reasonStr = typeof reason === 'object' ? JSON.stringify(reason) : reason;
       console.log(c.red + c.bold + `❌ [Java] ${username} ko Kick kar diya gaya: ${reasonStr}` + c.reset);
+      
+      // Agar Sonar ne "wait a few seconds" wala kick diya hai
+      if (reasonStr.includes('verify') || reasonStr.includes('VERIFICATION') || reasonStr.includes('bot verification')) {
+          console.log(c.yellow + c.bold + `⚠️ [Verification System] Server ne kick kiya hai! Bot haar nahi manega, exact 8 second baad wapas reconnect attempt karega!` + c.reset);
+          dynamicReconnectWait = 8000; // Force 8 seconds wait to respect Sonar cooldown
+      }
   });
   
   bot.on('error', (err) => console.log(c.yellow + c.bold + `⚠️ [Java] ${username} Error: ${err.message}` + c.reset))
@@ -414,19 +422,18 @@ function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, sp
       const index = activeJavaBots.indexOf(bot);
       if (index > -1) activeJavaBots.splice(index, 1);
 
-      // Q7: Reconnect Logic
+      // Q7: Reconnect Logic (Looping)
       if (reconnectChoice === '1') {
-          // Change Name format completely to simulate new entity
-          const newName = generateName(baseName, '4'); // Force fresh word+num
-          console.log(c.yellow + c.bold + `🔄 [Java] IP/Name change simulation sath Auto-Reconnect: ${newName} (${reconnectWait/1000}s me)...` + c.reset);
+          const newName = generateName(baseName, '4'); 
+          console.log(c.yellow + c.bold + `🔄 [Java] IP/Name change simulation sath Auto-Reconnect: ${newName} (${dynamicReconnectWait/1000}s me)...` + c.reset);
           setTimeout(() => {
               launchJavaBot(ip, port, newName, version, moveChoice, targetPlayer, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, botPassword, speedChoice);
-          }, reconnectWait);
+          }, dynamicReconnectWait);
       } else if (reconnectChoice === '2') {
-          console.log(c.yellow + c.bold + `🔄 [Java] Same naam (${username}) ke sath normal Reconnect ho raha hai (${reconnectWait/1000}s me)...` + c.reset);
+          console.log(c.yellow + c.bold + `🔄 [Java] Same naam (${username}) ke sath normal Reconnect ho raha hai (${dynamicReconnectWait/1000}s me)...` + c.reset);
           setTimeout(() => {
               launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, botPassword, speedChoice);
-          }, reconnectWait);
+          }, dynamicReconnectWait);
       }
   })
 }
