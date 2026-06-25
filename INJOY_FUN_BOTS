@@ -54,128 +54,191 @@ function refreshScreen() {
 }
 
 const activeJavaBots = [];
+let uniqueCounter = 1; // Global rule ke liye unique counter
 
 function generateName(base, choice) {
-    if (choice === '3') {
-        return base; 
-    } else if (choice === '2') {
-        const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
-        return `${base}${words[Math.floor(Math.random() * words.length)]}`;
-    } else {
-        return `${base}${Math.floor(1000 + Math.random() * 9000)}`;
-    }
+    const words = ['spider', 'ninja', 'pro', 'hacker', 'god', 'titan', 'king', 'ghost', 'shadow', 'dragon', 'venom', 'wolf'];
+    const rWord = words[Math.floor(Math.random() * words.length)];
+    const rNum = Math.floor(1000 + Math.random() * 9000);
+    
+    let name = base;
+    if (choice === '1') name = `${base}${rNum}`;                      // Numbers
+    else if (choice === '2') name = `${base}${rWord}`;                 // Words
+    else if (choice === '4') name = `${base}${rWord}${rNum}`;          // Number + Words
+    else if (choice === '3') name = `${base}_${uniqueCounter}`;        // Exact name but forced unique globally
+
+    uniqueCounter++;
+    return name;
+}
+
+function generatePassword(botName) {
+    const words = ['pass', 'sec', 'key', 'op', 'joy', 'bot', 'lock'];
+    const rWord = words[Math.floor(Math.random() * words.length)];
+    const rNum = Math.floor(1000 + Math.random() * 9000);
+    return `${botName}${rWord}${rNum}`; // Auto Generate: Name + Word + Number
 }
 
 async function startInteractiveMenu() {
+  // VARIABLES FOR STATE MACHINE
+  let editionChoice, modeChoice, botCount, ipInput, parsedIp, parsedPort;
+  let baseName, suffixChoice, customPassword;
+  let moveChoice, targetPlayer;
+  let reconnectChoice, speedChoice;
+  let spamEnable, spamMsg = "", spamCount = 0;
+  let versionChoice, javaVer = false, bedrockVer = false;
+
+  let step = 1;
+
+  while (step <= 10) {
+    refreshScreen();
+
+    if (step === 1) {
+      console.log(c.yellow + c.bold + 'Q1. Minecraft Edition:' + c.reset)
+      console.log(c.cyan + '(1) Java bot | (2) Bedrock bot | (3) Dono (Java+Bedrock) | (4) Exit' + c.reset)
+      editionChoice = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      if (editionChoice === '4') {
+        console.clear(); console.log(c.red + c.bold + 'Script band ho rahi hai... Phir milenge! 🕷️' + c.reset); process.exit(0);
+      }
+      if (['1','2','3'].includes(editionChoice)) step++;
+    } 
+    
+    else if (step === 2) {
+      console.log(c.yellow + c.bold + 'Q2. Deployment Mode:' + c.reset)
+      console.log(c.cyan + '(1) Limited bots | (2) Unlimited bots | (3) Back' + c.reset)
+      modeChoice = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      
+      if (modeChoice === '3') step--;
+      else if (['1','2'].includes(modeChoice)) {
+        botCount = Infinity;
+        if (modeChoice === '1') {
+          const bc = (await ask(c.green + c.bold + 'Kitne bots chahiye?-» ' + c.reset)).trim();
+          botCount = parseInt(bc) || 1;
+        }
+        step++;
+      }
+    } 
+    
+    else if (step === 3) {
+      console.log(c.yellow + c.bold + 'Q3. Server IP & Port:' + c.reset)
+      console.log(c.cyan + 'Format me dalo (Jaise: mum-pro.kelmora.cloud:25580 ya sirf IP)' + c.reset)
+      console.log(c.magenta + 'Peeche jana hai toh "back" likho.' + c.reset)
+      ipInput = (await ask(c.green + c.bold + 'IP:Port-» ' + c.reset)).trim()
+      
+      if (ipInput.toLowerCase() === 'back') {
+        step--;
+      } else if (ipInput !== "") {
+        const parts = ipInput.split(':');
+        parsedIp = parts[0];
+        parsedPort = parts[1] ? parseInt(parts[1]) : null;
+        step++;
+      }
+    } 
+    
+    else if (step === 4) {
+      console.log(c.yellow + c.bold + 'Q4. Base Name & Suffix:' + c.reset)
+      baseName = (await ask(c.green + c.bold + 'Bot ka Base Name-» ' + c.reset)).trim()
+      if (baseName.toLowerCase() === 'back') { step--; continue; }
+      
+      console.log(c.cyan + '\nBots ke piche (suffix) kya lagana hai?')
+      console.log('(1) Numbers | (2) Words | (3) Exact Name | (4) Number aur Words dono | (5) Back' + c.reset)
+      suffixChoice = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      
+      if (suffixChoice === '5') step--;
+      else if (['1','2','3','4'].includes(suffixChoice)) step++;
+    } 
+    
+    else if (step === 5) {
+      console.log(c.yellow + c.bold + 'Q5. Bot Password:' + c.reset)
+      console.log(c.cyan + '(Khali chhodne par Name+Word+Number ka Unique Password auto-generate hoga) | Peeche jane k liye "back" likhein' + c.reset)
+      customPassword = (await ask(c.green + c.bold + 'Password-» ' + c.reset)).trim()
+      
+      if (customPassword.toLowerCase() === 'back') step--;
+      else step++;
+    } 
+    
+    else if (step === 6) {
+      console.log(c.yellow + c.bold + 'Q6. Advanced Movements:' + c.reset)
+      console.log(c.cyan + '(1) Walk Randomly | (2) Jumping+Sneak | (3) Follow Player | (4) Freeze | (5) Back' + c.reset)
+      moveChoice = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      
+      if (moveChoice === '5') step--;
+      else if (moveChoice === '3') {
+          targetPlayer = (await ask(c.green + c.bold + 'Kisko follow karna hai? (Player Name)-» ' + c.reset)).trim()
+          step++;
+      }
+      else if (['1','2','4'].includes(moveChoice)) step++;
+    } 
+    
+    else if (step === 7) {
+      console.log(c.yellow + c.bold + 'Q7. Anti-Kick / Reconnect:' + c.reset)
+      console.log(c.cyan + '(1) IP change per bots (Proxy Simulator) | (2) Just normal, don\'t change IP | (3) Back' + c.reset)
+      reconnectChoice = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      
+      if (reconnectChoice === '3') step--;
+      else if (['1','2'].includes(reconnectChoice)) step++;
+    } 
+    
+    else if (step === 8) {
+      console.log(c.yellow + c.bold + 'Q8. Joining Speed & Bypass:' + c.reset)
+      console.log(c.cyan + '(1) Normal | (2) Anti-bot bypass (Safe) | (3) Ultra Speed | (4) Back' + c.reset)
+      speedChoice = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      
+      if (speedChoice === '4') step--;
+      else if (['1','2','3'].includes(speedChoice)) step++;
+    } 
+    
+    else if (step === 9) {
+      console.log(c.yellow + c.bold + 'Q9. Chat / Spam Module:' + c.reset)
+      console.log(c.cyan + '(1) Auto Spam | (2) Terminal In-Game Chat | (3) Just joined (Silent) | (4) Back' + c.reset)
+      spamEnable = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      
+      if (spamEnable === '4') step--;
+      else if (spamEnable === '1') {
+          spamMsg = (await ask(c.green + c.bold + 'Message kya spam karna hai?-» ' + c.reset)).trim()
+          spamCount = parseInt((await ask(c.green + c.bold + 'Kitni baar bheje?-» ' + c.reset)).trim()) || 5;
+          step++;
+      }
+      else if (['2','3'].includes(spamEnable)) step++;
+    } 
+    
+    else if (step === 10) {
+      console.log(c.yellow + c.bold + 'Q10. Bot Version:' + c.reset)
+      console.log(c.cyan + '(1) Use default set version (Java: 1.21.4 | Bedrock: 1.26.30)' + c.reset)
+      console.log(c.cyan + '(2) Use your needed version (Custom)' + c.reset)
+      console.log(c.cyan + '(3) Back' + c.reset)
+      versionChoice = (await ask(c.green + c.bold + 'Choice-» ' + c.reset)).trim()
+      
+      if (versionChoice === '3') step--;
+      else if (versionChoice === '1') {
+          javaVer = '1.21.4';
+          bedrockVer = '1.26.30'; // As requested
+          step++; // Loop khatam!
+      }
+      else if (versionChoice === '2') {
+          if (editionChoice === '1' || editionChoice === '3') {
+              javaVer = (await ask(c.green + c.bold + 'Java version-» ' + c.reset)).trim()
+          }
+          if (editionChoice === '2' || editionChoice === '3') {
+              bedrockVer = (await ask(c.green + c.bold + 'Bedrock version-» ' + c.reset)).trim()
+          }
+          step++; // Loop khatam!
+      }
+    }
+  } // End of While Loop
+
   refreshScreen()
-  console.log(c.yellow + c.bold + 'Q1. Tumhe kaunse Minecraft edition ka bot chahiye?' + c.reset)
-  console.log(c.cyan + '1) Java bot')
-  console.log('2) Bedrock bot')
-  console.log('3) Dono (Java + Bedrock)')
-  console.log('4) Exit (Bahar niklo)' + c.reset + '\n')
   
-  const editionChoice = (await ask(c.green + c.bold + 'Apna Choice batao (1-4)-» ' + c.reset)).trim()
-  if (editionChoice === '4') {
-    console.clear()
-    console.log(c.red + c.bold + 'Script band ho rahi hai... Phir milenge! 🕷️' + c.reset)
-    process.exit(0)
-  }
+  // PARSE PORTS (Optimized for Java & Bedrock automatically)
+  const javaPort = parsedPort ? parsedPort : null; // null uses SRV record for java
+  const bedrockPort = parsedPort ? parsedPort : 19132; // bedrock default
 
-  refreshScreen()
-  console.log(c.yellow + c.bold + 'Q2. Apna Server IP aur Port dalo (Agar default port hai toh bas Enter dabao)' + c.reset)
-  const ip = (await ask(c.green + c.bold + '1) Server IP-» ' + c.reset)).trim()
-  const portInput = (await ask(c.green + c.bold + '2) Server Port-» ' + c.reset)).trim()
+  console.log(c.magenta + c.bold + `🚀 Deploy kar rahe hain ${botCount === Infinity ? 'UNLIMITED' : botCount} bots ko ${parsedIp} par...` + c.reset)
+  if (reconnectChoice === '1') {
+      console.log(c.yellow + `⚠️ [Anti-Kick] Bots simulate IP change routines (Note: Real IP rotaton requires proxy agents).` + c.reset);
+  }
+  console.log(c.red + c.bold + '⚠️ Rukne ke liye kisi bhi waqt [Ctrl + C] dabao.' + c.reset)
   
-  refreshScreen()
-  console.log(c.yellow + c.bold + 'Q3. Bot ka Base Name aur Naming Style batao' + c.reset)
-  const baseName = (await ask(c.green + c.bold + '1) Bot ka Base Name-» ' + c.reset)).trim()
-  console.log(c.cyan + '\nBots ke piche (suffix) kya lagana hai?')
-  console.log('1) Numbers (Jaise: ' + baseName + '7449)')
-  console.log('2) Words (Jaise: ' + baseName + 'spider)')
-  console.log('3) Kuch mat lagao (Exact Name: ' + baseName + ')' + c.reset)
-  const suffixChoice = (await ask(c.green + c.bold + 'Choice (1-3)-» ' + c.reset)).trim()
-
-  refreshScreen()
-  console.log(c.yellow + c.bold + 'Q4. Bot ka Password dalo / Enter bot password' + c.reset)
-  console.log(c.cyan + '(Khali chhodne par Auto-Unique password banega: OP_Name@123)' + c.reset)
-  const customPassword = (await ask(c.green + c.bold + 'Password-» ' + c.reset)).trim()
-
-  refreshScreen()
-  let javaVer = false;
-  let bedrockVer = false;
-
-  if (editionChoice === '1' || editionChoice === '3') {
-    console.log(c.yellow + c.bold + 'Q5. Java edition bot ka version dalo? (Auto-detect ke liye bas Enter dabao)' + c.reset)
-    let jv = (await ask(c.green + c.bold + '1) Java version-» ' + c.reset)).trim()
-    if (jv) javaVer = jv;
-  }
-  if (editionChoice === '2' || editionChoice === '3') {
-    console.log(c.yellow + c.bold + 'Q5b. Bedrock edition bot ka version dalo? (Auto-detect ke liye bas Enter dabao)' + c.reset)
-    let bv = (await ask(c.green + c.bold + '1) Bedrock version-» ' + c.reset)).trim()
-    if (bv) bedrockVer = bv;
-  }
-
-  refreshScreen()
-  console.log(c.yellow + c.bold + 'Q6. Deployment Mode select karo' + c.reset)
-  console.log(c.cyan + '1) Limited bots (Tum batao kitne bots bhejney hain)')
-  console.log('2) Unlimited bots (Bots lagatar join karenge jab tak Ctrl+C nahi dabaate)' + c.reset + '\n')
-  const modeChoice = (await ask(c.green + c.bold + 'Choice (1-2)-» ' + c.reset)).trim()
-
-  let botCount = Infinity
-  if (modeChoice === '1') {
-    const botCountInput = (await ask(c.green + c.bold + 'Kitne bots chahiye?-» ' + c.reset)).trim()
-    botCount = parseInt(botCountInput) || 1
-  }
-
-  refreshScreen()
-  console.log(c.yellow + c.bold + 'Q7. Advanced Movements aur Custom Pathfinding' + c.reset)
-  console.log(c.cyan + '1) Idhar-udhar ghoomein (Walk Randomly)')
-  console.log('2) Uchal-kood karein (Jumping)')
-  console.log('3) Baith jayein (Sneak)')
-  console.log('4) Paas wale player ke piche chalein (Follow Closest Player)')
-  console.log('5) Kuch nahi (Shanti se khade rahein)' + c.reset + '\n')
-  const moveChoice = (await ask(c.green + c.bold + 'Choice (1-5)-» ' + c.reset)).trim()
-
-  refreshScreen()
-  console.log(c.yellow + c.bold + 'Q8. Global Chat / Spam Module' + c.reset)
-  console.log(c.cyan + '1) Auto Chat Spam ON (Bot khud lagatar spam karega)')
-  console.log('2) Chat OFF rakho (Kuch nahi karega)')
-  console.log('3) Terminal In-Game Chat (Tum terminal me type karo, bot game me bolega)' + c.reset + '\n')
-  const spamEnable = (await ask(c.green + c.bold + 'Choice (1-3)-» ' + c.reset)).trim()
-  
-  let spamMsg = "";
-  let spamCount = 0;
-  if (spamEnable === '1') {
-      spamMsg = (await ask(c.green + c.bold + 'Kaunsa message spam karna hai?-» ' + c.reset)).trim()
-      const countInput = (await ask(c.green + c.bold + 'Ek bot kitni baar message bheje?-» ' + c.reset)).trim()
-      spamCount = parseInt(countInput) || 5;
-  }
-
-  refreshScreen()
-  console.log(c.yellow + c.bold + 'Q9. Anti-Kick / Ban Bypass System' + c.reset)
-  console.log(c.cyan + '1) Naye naam ke sath Auto-Reconnect karein (Change Name & Bypass)')
-  console.log('2) Reconnect mat karna (Off)')
-  console.log('3) Same naam ke sath wapas Reconnect karein (Only Reconnect, No Name Change)' + c.reset + '\n')
-  const reconnectChoice = (await ask(c.green + c.bold + 'Choice (1-3)-» ' + c.reset)).trim()
-
-  refreshScreen()
-  // 🔴 NAYA FEATURE: SONAR ANTI-BOT BYPASS & SPEED
-  console.log(c.yellow + c.bold + 'Q10. Bot Joining Speed & Anti-Bot Bypass?' + c.reset)
-  console.log(c.cyan + '1) Safe (Anti-Bot Bypass - Human jaisa delay lega, Sonar pakad nahi payega)')
-  console.log('2) Normal (Standard server ke liye - 6 second delay)')
-  console.log('3) Ultra (Fast joining - 2 second delay)')
-  console.log('4) Hacker (Forceful Way - Zero delay brute-force, lagatar clicks)' + c.reset + '\n')
-  const speedChoice = (await ask(c.green + c.bold + 'Choice (1-4)-» ' + c.reset)).trim()
-
-  refreshScreen()
-  
-  const javaPort = portInput ? parseInt(portInput) : null
-  const bedrockPort = portInput ? parseInt(portInput) : 19132
-
-  console.log(c.magenta + c.bold + `🚀 Deploy kar rahe hain ${botCount === Infinity ? 'UNLIMITED' : botCount} bots ko ${ip} par...` + c.reset)
-  console.log(c.red + c.bold + '⚠️ Rukne ke liye kisi bhi waqt [Ctrl + C] dabao (Terminal automatically clear ho jayega).' + c.reset)
-  
-  if (spamEnable === '3') {
+  if (spamEnable === '2') {
       console.log(c.green + c.bold + '💬 TERMINAL CHAT ON HAI: Yahan terminal me jo bhi type karoge, wo server me jayega!' + c.reset)
       rl.on('line', (input) => {
           if(input.trim() !== '') {
@@ -190,12 +253,11 @@ async function startInteractiveMenu() {
 
   let currentBot = 1;
 
-  // SPEED CALCULATION
+  // Q8: Joining Speed Calculation
   let joinDelay = 6000;
-  if (speedChoice === '1') joinDelay = 12000; // Safe (12 sec)
-  else if (speedChoice === '2') joinDelay = 6000; // Normal
-  else if (speedChoice === '3') joinDelay = 2000; // Ultra
-  else if (speedChoice === '4') joinDelay = 100; // Hacker Forceful
+  if (speedChoice === '1') joinDelay = 6000;       // Normal
+  else if (speedChoice === '2') joinDelay = 12000; // Anti-bot bypass (Safe)
+  else if (speedChoice === '3') joinDelay = 2000;  // Ultra Speed
 
   function spawnNextBot() {
     if (currentBot > botCount) {
@@ -204,10 +266,12 @@ async function startInteractiveMenu() {
     }
 
     const botName = generateName(baseName, suffixChoice);
+    // Q5: Auto-generate password logic
+    const botPassword = customPassword !== "" ? customPassword : generatePassword(botName);
 
-    if (editionChoice === '1' || editionChoice === '3') launchJavaBot(ip, javaPort, botName, javaVer, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, customPassword, speedChoice);
+    if (editionChoice === '1' || editionChoice === '3') launchJavaBot(parsedIp, javaPort, botName, javaVer, moveChoice, targetPlayer, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, botPassword, speedChoice);
     if (editionChoice === '2' || editionChoice === '3') {
-      if (bedrock) launchBedrockBot(ip, bedrockPort, `${botName}BR`, bedrockVer, reconnectChoice, suffixChoice, baseName, speedChoice);
+      if (bedrock) launchBedrockBot(parsedIp, bedrockPort, `${botName}BR`, bedrockVer, reconnectChoice, suffixChoice, baseName, speedChoice);
     }
 
     currentBot++;
@@ -217,8 +281,8 @@ async function startInteractiveMenu() {
   spawnNextBot()
 }
 
-function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, customPassword, speedChoice) {
-  console.log(c.cyan + `[Java] Bhej rahe hain ${username}${version ? ` (v${version})` : ' (Auto-Detecting)'}...` + c.reset)
+function launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, botPassword, speedChoice) {
+  console.log(c.cyan + `[Java] Bhej rahe hain ${username} (v${version})...` + c.reset)
   
   const botOptions = { host: ip, username: username, physicsEnabled: true }
   if (port) botOptions.port = port;
@@ -226,29 +290,37 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
 
   const bot = mineflayer.createBot(botOptions)
   
-  const botPassword = customPassword !== "" ? customPassword : `OP_${username}@123`;
-  
   // ANTI-BOT DELAY MAPPING
-  let guiDelay = 4500;
+  let guiDelay = 3000;
   let reconnectWait = 10000;
   
-  if (speedChoice === '1') { guiDelay = 5500; reconnectWait = 15000; } // Safe
-  else if (speedChoice === '2') { guiDelay = 3000; reconnectWait = 10000; } // Normal
-  else if (speedChoice === '3') { guiDelay = 1000; reconnectWait = 5000; } // Ultra
-  else if (speedChoice === '4') { guiDelay = 100; reconnectWait = 1000; } // Hacker (Instant Spam)
+  if (speedChoice === '1') { guiDelay = 3000; reconnectWait = 10000; } // Normal
+  else if (speedChoice === '2') { guiDelay = 5500; reconnectWait = 15000; } // Anti-Bot
+  else if (speedChoice === '3') { guiDelay = 1000; reconnectWait = 5000; } // Ultra Speed
+
+  let authHandled = false;
+  let defaultAuthTimer = null;
+
+  function doAuth() {
+      if (authHandled) return;
+      authHandled = true;
+      console.log(c.magenta + `🔑 [Java] ${username} Verification pass. Auth Bypass shuru (Pass: ${botPassword})...` + c.reset);
+      bot.chat(`/register ${botPassword} ${botPassword}`);
+      setTimeout(() => {
+          bot.chat(`/login ${botPassword}`);
+      }, 2000);
+  }
 
   bot.once('spawn', () => {
-    console.log(c.green + c.bold + `✅ [Java] ${username} ne successfully join kar liya!` + c.reset)
+    console.log(c.green + c.bold + `✅ [Java] ${username} ne successfully join kar liya!` + c.reset);
     activeJavaBots.push(bot);
     
-    setTimeout(() => {
-      bot.chat(`/register ${botPassword} ${botPassword}`)
-      setTimeout(() => {
-        bot.chat(`/login ${botPassword}`)
-      }, 2000)
-    }, guiDelay)
+    defaultAuthTimer = setTimeout(() => {
+        if (!authHandled) doAuth();
+    }, 5000);
 
-    if (moveChoice === '1') {
+    // Q6: ADVANCED MOVEMENTS
+    if (moveChoice === '1') { // Walk Randomly
         setInterval(() => {
             try {
                 bot.setControlState('forward', true);
@@ -256,20 +328,18 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
                 bot.look(Math.random() * Math.PI * 2, 0);
             } catch(e){}
         }, 4000);
-    } else if (moveChoice === '2') {
+    } else if (moveChoice === '2') { // Jumping + Sneak
         setInterval(() => {
             try {
                 bot.setControlState('jump', true);
-                setTimeout(() => bot.setControlState('jump', false), 1000);
+                bot.setControlState('sneak', true);
+                setTimeout(() => { bot.setControlState('jump', false); bot.setControlState('sneak', false); }, 1000);
             } catch(e){}
         }, 2000);
-    } else if (moveChoice === '3') {
-        bot.setControlState('sneak', true);
-    } else if (moveChoice === '4') {
+    } else if (moveChoice === '3') { // Follow Player
         setInterval(() => {
             try {
-                const playerFilter = (entity) => entity.type === 'player' && entity.username !== bot.username;
-                const player = bot.nearestEntity(playerFilter);
+                const player = bot.players[targetPlayer]?.entity;
                 if (player) {
                     bot.lookAt(player.position.offset(0, player.height, 0));
                     bot.setControlState('forward', true);
@@ -277,7 +347,9 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
                     bot.setControlState('forward', false);
                 }
             } catch(e){}
-        }, 1000);
+        }, 500);
+    } else if (moveChoice === '4') { // Freeze
+         // Do nothing, bot stands completely still.
     }
 
     if (spamEnable === '1' && spamCount > 0) {
@@ -293,21 +365,22 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
     }
   })
 
-  // Sonar Resource Pack Bypass
   bot.on('resourcePack', (url, hash) => {
+      clearTimeout(defaultAuthTimer); 
       console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko Resource Pack Pop-up mila! (${guiDelay}ms delay lag raha hai)...` + c.reset);
       setTimeout(() => {
           try {
               bot.acceptResourcePack();
               console.log(c.green + `✅ [Java] ${username} ne Resource Pack 'Yes/Verification' par click kar diya!` + c.reset);
+              setTimeout(doAuth, 2000);
           } catch (e) {
               console.log(c.red + `❌ Bypass fail: ${e.message}` + c.reset);
           }
       }, guiDelay);
   });
 
-  // Sonar GUI Menu Bypass
   bot.on('windowOpen', (window) => {
+      clearTimeout(defaultAuthTimer); 
       console.log(c.yellow + c.bold + `⚠️ [Java] ${username} ko GUI Pop-up mila! Bypassing in ${guiDelay}ms...` + c.reset);
       setTimeout(() => {
           try {
@@ -315,15 +388,9 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
               if (!targetItem) targetItem = window.slots.find(i => i != null); 
               
               if (targetItem) {
-                  // Forceful Hacker Mode me click spam karega, Safe me normal click
-                  if(speedChoice === '4') {
-                      bot.clickWindow(targetItem.slot, 0, 0);
-                      bot.clickWindow(targetItem.slot, 0, 0);
-                      console.log(c.green + `🧨 [HACKER] ${username} Forceful Click Spam on '${targetItem.name}'!` + c.reset);
-                  } else {
-                      bot.clickWindow(targetItem.slot, 0, 0); 
-                      console.log(c.green + `🖱️ [Java] ${username} ne '${targetItem.name}' par click kiya! (Slot: ${targetItem.slot})` + c.reset);
-                  }
+                  bot.clickWindow(targetItem.slot, 0, 0); 
+                  console.log(c.green + `🖱️ [Java] ${username} ne '${targetItem.name}' par click kiya! (Slot: ${targetItem.slot})` + c.reset);
+                  setTimeout(doAuth, 2000);
               }
           } catch(e) {
               console.log(c.red + `❌ GUI bypass fail: ${e.message}` + c.reset);
@@ -347,25 +414,27 @@ function launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spam
       const index = activeJavaBots.indexOf(bot);
       if (index > -1) activeJavaBots.splice(index, 1);
 
+      // Q7: Reconnect Logic
       if (reconnectChoice === '1') {
-          const newName = generateName(baseName, suffixChoice);
-          console.log(c.yellow + c.bold + `🔄 [Java] Nayi identity ke sath Auto-Reconnect ho raha hai: ${newName} (${reconnectWait/1000}s me)...` + c.reset);
+          // Change Name format completely to simulate new entity
+          const newName = generateName(baseName, '4'); // Force fresh word+num
+          console.log(c.yellow + c.bold + `🔄 [Java] IP/Name change simulation sath Auto-Reconnect: ${newName} (${reconnectWait/1000}s me)...` + c.reset);
           setTimeout(() => {
-              launchJavaBot(ip, port, newName, version, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, customPassword, speedChoice);
+              launchJavaBot(ip, port, newName, version, moveChoice, targetPlayer, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, botPassword, speedChoice);
           }, reconnectWait);
-      } else if (reconnectChoice === '3') {
-          console.log(c.yellow + c.bold + `🔄 [Java] Same naam (${username}) ke sath Auto-Reconnect ho raha hai (${reconnectWait/1000}s me)...` + c.reset);
+      } else if (reconnectChoice === '2') {
+          console.log(c.yellow + c.bold + `🔄 [Java] Same naam (${username}) ke sath normal Reconnect ho raha hai (${reconnectWait/1000}s me)...` + c.reset);
           setTimeout(() => {
-              launchJavaBot(ip, port, username, version, moveChoice, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, customPassword, speedChoice);
+              launchJavaBot(ip, port, username, version, moveChoice, targetPlayer, spamEnable, spamMsg, spamCount, reconnectChoice, suffixChoice, baseName, botPassword, speedChoice);
           }, reconnectWait);
       }
   })
 }
 
 function launchBedrockBot(ip, port, username, version, reconnectChoice, suffixChoice, baseName, speedChoice) {
-  let reconnectWait = speedChoice === '1' ? 15000 : (speedChoice === '4' ? 1000 : 10000);
+  let reconnectWait = speedChoice === '2' ? 15000 : (speedChoice === '3' ? 5000 : 10000);
   
-  console.log(c.blue + `[Bedrock] Bhej rahe hain ${username}${version ? ` (v${version})` : ' (Auto-Detecting)'}...` + c.reset)
+  console.log(c.blue + `[Bedrock] Bhej rahe hain ${username} (v${version})...` + c.reset)
   const options = { host: ip, port: port, username: username, offline: true }
   if (version) options.version = version;
   
@@ -378,11 +447,11 @@ function launchBedrockBot(ip, port, username, version, reconnectChoice, suffixCh
   client.on('disconnect', (packet) => {
       console.log(c.red + c.bold + `❌ [Bedrock] ${username} ko Kick kar diya gaya` + c.reset);
       if (reconnectChoice === '1') {
-          const newName = generateName(baseName, suffixChoice) + "BR";
-          console.log(c.yellow + c.bold + `🔄 [Bedrock] Nayi identity ke sath Auto-Reconnect ho raha hai: ${newName} (${reconnectWait/1000}s me)...` + c.reset);
+          const newName = generateName(baseName, '4') + "BR";
+          console.log(c.yellow + c.bold + `🔄 [Bedrock] IP/Name change simulation Auto-Reconnect: ${newName} (${reconnectWait/1000}s me)...` + c.reset);
           setTimeout(() => launchBedrockBot(ip, port, newName, version, reconnectChoice, suffixChoice, baseName, speedChoice), reconnectWait);
-      } else if (reconnectChoice === '3') {
-          console.log(c.yellow + c.bold + `🔄 [Bedrock] Same naam (${username}) ke sath Auto-Reconnect ho raha hai (${reconnectWait/1000}s me)...` + c.reset);
+      } else if (reconnectChoice === '2') {
+          console.log(c.yellow + c.bold + `🔄 [Bedrock] Same naam (${username}) ke sath normal Reconnect (${reconnectWait/1000}s me)...` + c.reset);
           setTimeout(() => launchBedrockBot(ip, port, username, version, reconnectChoice, suffixChoice, baseName, speedChoice), reconnectWait);
       }
   })
