@@ -120,9 +120,9 @@ async function startInteractiveMenu() {
     
     else if (step === 3) {
       console.log(c.yellow + c.bold + 'Q3. Server IP & Port:' + c.reset)
-      console.log(c.cyan + 'Format me dalo (Jaise: mum-pro.kelmora.cloud:25580 ya sirf IP)' + c.reset)
-      console.log(c.magenta + 'Peeche jana hai toh "back" likho.' + c.reset)
-      ipInput = (await ask(c.green + c.bold + 'IP:Port-» ' + c.reset)).trim()
+      // FIX: Cleaned up the input message. No more unnecessary formatting text.
+      console.log(c.magenta + '(Peeche jane ke liye "back" likhein)' + c.reset)
+      ipInput = (await ask(c.green + c.bold + 'IP (Port ke sath ya bina)-» ' + c.reset)).trim()
       
       if (ipInput.toLowerCase() === 'back') {
         step--;
